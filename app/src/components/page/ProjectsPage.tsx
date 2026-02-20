@@ -71,13 +71,13 @@ const ProjectsPage: React.FC = () => {
 
       {/* Stats */}
       <div
-        className="flex gap-4 mb-8 animate-slide-in"
+        className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 animate-slide-in"
         style={{ animationDelay: "0.1s" }}
       >
         {statsData.map((stat, index) => (
           <div
             key={index}
-            className="flex-1 border border-btn-border rounded-xl p-4 hover:shadow-lg transition-all select-none"
+            className="border border-btn-border rounded-xl p-4 hover:shadow-lg transition-all select-none"
           >
             <div className="flex items-center justify-between">
               <div>
@@ -125,7 +125,7 @@ const ProjectsPage: React.FC = () => {
             )}
           </div>
 
-          <div className="flex gap-4 w-full lg:w-auto">
+          <div className="flex flex-wrap gap-4 w-full lg:w-auto">
             {/* Filter by Status */}
             <select
               value={filterStatus}

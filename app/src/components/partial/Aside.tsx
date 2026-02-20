@@ -2,10 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import type { link } from "../../types/link";
 import FaIcon from "../atom/FaIcon.tsx";
+import useWindowWidth from "../../hook/useWindowWidth";
 
 export default function Aside() {
   const [isExpanded, setExpanded] = useState(false);
   const location = useLocation();
+  const width = useWindowWidth();
+  const isMobile = width < 768;
 
   const btns: link[] = [
     { icon: "house", name: "inicio", href: "inicio" },
@@ -23,17 +26,22 @@ export default function Aside() {
     btns.find((btn) => location.pathname.startsWith("/" + btn.href))?.name ??
     (location.pathname.includes("/proyecto/") ? "proyectos" : "inicio");
 
-  const [btnHover, setBtnHover] = useState({ top: 0 });
+  const [btnHover, setBtnHover] = useState({ position: 0 });
   const linkContainer = useRef(null);
-  const [currentTop, setCurrentTop] = useState(0);
+  const [currentPosition, setCurrentPosition] = useState(0);
 
   // Actualiza la posición del marker cuando cambia la página
   useEffect(() => {
     const activeBtn = document.querySelector(`#aside-${currentPageName}`);
     if (activeBtn) {
       const rect = activeBtn.getBoundingClientRect();
-      setCurrentTop(rect.top - 64);
-      setBtnHover({ top: rect.top - 64 });
+      if (isMobile) {
+        setCurrentPosition(rect.left - 16);
+        setBtnHover({ position: rect.left - 16 });
+      } else {
+        setCurrentPosition(rect.top - 64);
+        setBtnHover({ position: rect.top - 64 });
+      }
     }
   }, [currentPageName]);
 
@@ -42,53 +50,64 @@ export default function Aside() {
       id="aside"
       ref={linkContainer}
       className={
-        "[grid-area:aside] relative flex flex-col bg-base transition-all " +
-        (isExpanded ? "w-50" : "w-17")
+        "[grid-area:aside] relative w-full flex items-center md:items-start md:flex-col bg-base transition-all " +
+        (isExpanded || !isMobile ? "w-50" : "w-17")
       }
       onMouseEnter={() => setExpanded(true)}
       onMouseLeave={() => setExpanded(false)}
     >
-      {btns.map((btn, index) => (
-        <Link
-          key={index}
-          id={"aside-" + btn.name}
-          to={btn.href}
-          className={`capitalize relative w-full flex items-center p-4 gap-4 transition-colors ${
-            currentPageName === btn.name
-              ? "bg-btn rounded-2xl"
-              : "cursor-pointer hover:bg-mantle"
-          }`}
-          onMouseEnter={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            setBtnHover({ top: rect.top - 64 });
-          }}
-          onMouseLeave={() => setBtnHover({ top: currentTop })}
-        >
-          <FaIcon
-            name={btn.icon}
-            size="size-9"
-            light={btn.name === "question-circle" || btn.name === "info-circle"}
-          />
-          <span
-            className={`text-2xl overflow-hidden transition-color ${
-              isExpanded ? "text-font" : "hidden text-transparent"
+      {btns.map((btn, index) =>
+        (isMobile && index < 5) || !isMobile ? (
+          <Link
+            key={index}
+            id={"aside-" + btn.name}
+            to={btn.href}
+            className={`capitalize relative aspect-square md:aspect-auto md:w-full flex items-center p-4 gap-4 transition-colors ${
+              currentPageName === btn.name
+                ? "bg-btn rounded-2xl"
+                : "cursor-pointer hover:bg-mantle"
             }`}
+            onMouseEnter={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              setBtnHover({
+                position: isMobile ? rect.left - 64 : rect.top - 64,
+              });
+            }}
+            onMouseLeave={() => setBtnHover({ position: currentPosition })}
           >
-            {btn.name}
-          </span>
-        </Link>
-      ))}
+            <FaIcon
+              name={btn.icon}
+              size="size-9"
+              light={
+                btn.name === "question-circle" || btn.name === "info-circle"
+              }
+            />
+            <span
+              className={`text-2xl overflow-hidden transition-color ${
+                isExpanded && !isMobile
+                  ? "text-font"
+                  : "hidden text-transparent"
+              }`}
+            >
+              {btn.name}
+            </span>
+          </Link>
+        ) : (
+          ""
+        ),
+      )}
       <div
         id="aside-marker"
-        className="absolute left-0 w-2 h-17 transition-all duration-200 py-4"
+        className="absolute top-0 md:top-auto md:left-0 w-17 h-2 md:w-2 md:h-17 transition-all duration-200 px-2 md:px-0 md:py-4"
         style={{
-          top: btnHover.top,
+          top: !isMobile ? btnHover.position : undefined,
+          left: isMobile ? btnHover.position : undefined,
         }}
       >
-        <div className="h-full w-7/10 bg-main rounded-r-full"></div>
+        <div className="w-full md:h-full h-7/10 md:w-7/10 bg-main rounded-b-full md:rounded-b-none md:rounded-r-full"></div>
       </div>
 
-      <article className="w-full flex items-center p-4 pb-8 gap-2 mt-auto">
+      <article className="hidden w-full md:flex items-center p-4 pb-8 gap-2 mt-auto">
         <Link to="ajustes/cuenta" title="Ajustes del Perfil">
           <FaIcon name="circle-user" size="size-9" />
         </Link>

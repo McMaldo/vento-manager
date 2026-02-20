@@ -27,7 +27,7 @@ const MainPage: React.FC = () => {
   return (
     <>
       <section className="mb-12 animate-fade-in">
-        <div className="flex items-end justify-between mb-2">
+        <div className="flex flex-col sm:flex-row md:items-end justify-between mb-2">
           <div>
             <p className="text-font-light text-sm font-medium tracking-wide uppercase mb-2">
               {currentDate}
@@ -36,7 +36,7 @@ const MainPage: React.FC = () => {
               Escritorio
             </h1>
           </div>
-          <div className="flex gap-3">
+          <div className="flex sm:flex-col gap-3 md:flex-row">
             <button className="px-5 py-2.5 bg-icon text-mantle rounded-lg hover:bg-font transition-colors font-medium text-sm">
               Nuevo Proyecto
             </button>
