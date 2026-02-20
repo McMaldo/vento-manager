@@ -27,7 +27,7 @@ const MainPage: React.FC = () => {
   return (
     <>
       <section className="mb-12 animate-fade-in">
-        <div className="flex flex-col sm:flex-row md:items-end justify-between mb-2">
+        <div className="flex flex-col gap-2 sm:flex-row md:items-end justify-between mb-2">
           <div>
             <p className="text-font-light text-sm font-medium tracking-wide uppercase mb-2">
               {currentDate}
@@ -48,7 +48,7 @@ const MainPage: React.FC = () => {
             </Link>
           </div>
         </div>
-        <div className="h-1 w-20 bg-main rounded-full mt-4"></div>
+        <div className="hidden md:block h-1 w-20 bg-main rounded-full mt-4"></div>
       </section>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

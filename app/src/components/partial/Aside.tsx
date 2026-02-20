@@ -70,7 +70,7 @@ export default function Aside() {
             onMouseEnter={(e) => {
               const rect = e.currentTarget.getBoundingClientRect();
               setBtnHover({
-                position: isMobile ? rect.left - 64 : rect.top - 64,
+                position: isMobile ? rect.left - 16 : rect.top - 64,
               });
             }}
             onMouseLeave={() => setBtnHover({ position: currentPosition })}
