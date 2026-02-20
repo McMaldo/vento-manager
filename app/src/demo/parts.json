@@ -1,0 +1,94 @@
+[
+  {
+    "id": "pedidos",
+    "title": "Pedidos",
+    "description": "Descripción",
+    "color": "bg-blue-500",
+    "parts": [
+      {
+        "id": "1",
+        "title": "Pieza 1005",
+        "description": "Electroválvula solenoide 5/2 vías para control neumático"
+      },
+      {
+        "id": "2",
+        "title": "Pieza 1008",
+        "description": "Acoplamiento flexible de mordazas para transmisión entre ejes"
+      },
+      {
+        "id": "3",
+        "title": "Pieza 1009",
+        "description": "Tornillo de cabeza hexagonal M16 grado 8.8 para ensamblaje estructural"
+      },
+      {
+        "id": "4",
+        "title": "Pieza 1010",
+        "description": "Tuerca autoblocante M16 con inserto de nylon para vibraciones"
+      }
+    ]
+  },
+  {
+    "id": "proceso",
+    "title": "En Proceso",
+    "description": "Descripción",
+    "color": "bg-yellow-500",
+    "parts": [
+      {
+        "id": "5",
+        "title": "Pieza 1011",
+        "description": "Manguera hidráulica de alta presión con racor NPT 3/8"
+      },
+      {
+        "id": "6",
+        "title": "Pieza 1014",
+        "description": "Sensor de posición inductivo para detección de fin de carrera"
+      },
+      {
+        "id": "7",
+        "title": "Pieza 1016",
+        "description": "Guía lineal de recirculación de bolas para desplazamiento de precisión"
+      }
+    ]
+  },
+  {
+    "id": "almacen",
+    "title": "En Almacen",
+    "description": "Descripción",
+    "color": "bg-green-500",
+    "parts": [
+      {
+        "id": "8",
+        "title": "Pieza 1015",
+        "description": "Placa base de fundición gris para anclaje de cilindro hidráulico"
+      },
+      {
+        "id": "9",
+        "title": "Pieza 1018",
+        "description": "Correa dentada HTD de poliuretano reforzado para transmisión sincrónica"
+      }
+    ]
+  },
+  {
+    "id": "rectificacion",
+    "title": "Rectificación",
+    "description": "Descripción",
+    "color": "bg-red-500",
+    "parts": [
+      {
+        "id": "10",
+        "title": "Pieza 1017",
+        "description": "Polea dentada de aluminio paso 5M para sistema de transmisión por correa"
+      },
+      {
+        "id": "11",
+        "title": "Pieza 1019",
+        "description": "Cadena de arrastre portacables para gestión de cableado en ejes móviles"
+      },
+      {
+        "id": "12",
+        "title": "Pieza 1020",
+        "description": "Mordaza de garra hidráulica recubierta de caucho para piezas delicadas"
+      }
+    ]
+  }
+]

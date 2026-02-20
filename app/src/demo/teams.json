@@ -1,0 +1,215 @@
+[
+  {
+    "id": "1",
+    "name": "Hidráulica & Actuadores",
+    "description": "Diseño y desarrollo de sistemas hidráulicos y garras industriales",
+    "members": [
+      {
+        "id": "1",
+        "name": "Hernán Vázquez",
+        "role": "Ingeniero Jefe",
+        "avatar": "HV",
+        "status": "online"
+      },
+      {
+        "id": "2",
+        "name": "Lucía Pereyra",
+        "role": "Especialista Hidráulica",
+        "avatar": "LP",
+        "status": "online"
+      },
+      {
+        "id": "3",
+        "name": "Marcos Ibáñez",
+        "role": "Técnico de Campo",
+        "avatar": "MI",
+        "status": "away"
+      },
+      {
+        "id": "4",
+        "name": "Romina Acosta",
+        "role": "Analista de Fluidos",
+        "avatar": "RA",
+        "status": "offline"
+      }
+    ],
+    "projects": 6,
+    "color": "from-blue-500 to-cyan-600",
+    "createdDate": "Ene 2024",
+    "privacy": "private"
+  },
+  {
+    "id": "2",
+    "name": "Líneas de Montaje",
+    "description": "Automatización y optimización de líneas de ensamblaje industrial",
+    "members": [
+      {
+        "id": "5",
+        "name": "Gustavo Ríos",
+        "role": "Jefe de Producción",
+        "avatar": "GR",
+        "status": "online"
+      },
+      {
+        "id": "6",
+        "name": "Natalia Ferreyra",
+        "role": "Ingeniera de Procesos",
+        "avatar": "NF",
+        "status": "online"
+      },
+      {
+        "id": "7",
+        "name": "Pablo Méndez",
+        "role": "Técnico de Montaje",
+        "avatar": "PM",
+        "status": "away"
+      }
+    ],
+    "projects": 11,
+    "color": "from-emerald-500 to-teal-600",
+    "createdDate": "Feb 2024",
+    "privacy": "public"
+  },
+  {
+    "id": "3",
+    "name": "Robótica Industrial",
+    "description": "Integración de brazos robóticos y sistemas de automatización",
+    "members": [
+      {
+        "id": "8",
+        "name": "Ezequiel Suárez",
+        "role": "Líder Robótica",
+        "avatar": "ES",
+        "status": "online"
+      },
+      {
+        "id": "9",
+        "name": "Daniela Quiroga",
+        "role": "Programadora PLC",
+        "avatar": "DQ",
+        "status": "offline"
+      },
+      {
+        "id": "10",
+        "name": "Federico Navarro",
+        "role": "Técnico Electromecánico",
+        "avatar": "FN",
+        "status": "online"
+      },
+      {
+        "id": "11",
+        "name": "Valeria Ponce",
+        "role": "Integradora de Sistemas",
+        "avatar": "VP",
+        "status": "away"
+      },
+      {
+        "id": "12",
+        "name": "Ignacio Bravo",
+        "role": "Especialista SCADA",
+        "avatar": "IB",
+        "status": "offline"
+      }
+    ],
+    "projects": 8,
+    "color": "from-purple-500 to-pink-600",
+    "createdDate": "Mar 2024",
+    "privacy": "private"
+  },
+  {
+    "id": "4",
+    "name": "Mantenimiento & MRO",
+    "description": "Mantenimiento preventivo y correctivo de maquinaria pesada",
+    "members": [
+      {
+        "id": "13",
+        "name": "Adrián Molina",
+        "role": "Jefe de Mantenimiento",
+        "avatar": "AM",
+        "status": "online"
+      },
+      {
+        "id": "14",
+        "name": "Carolina Espíndola",
+        "role": "Técnica de Turno",
+        "avatar": "CE",
+        "status": "online"
+      },
+      {
+        "id": "15",
+        "name": "Raúl Ledesma",
+        "role": "Lubricador Industrial",
+        "avatar": "RL",
+        "status": "away"
+      }
+    ],
+    "projects": 14,
+    "color": "from-orange-500 to-red-600",
+    "createdDate": "Ene 2024",
+    "privacy": "public"
+  },
+  {
+    "id": "5",
+    "name": "Control de Calidad",
+    "description": "Inspección dimensional, ensayos no destructivos y normas ISO",
+    "members": [
+      {
+        "id": "16",
+        "name": "Silvana Ojeda",
+        "role": "Inspectora Senior",
+        "avatar": "SO",
+        "status": "online"
+      },
+      {
+        "id": "17",
+        "name": "Mauro Cabrera",
+        "role": "Técnico NDT",
+        "avatar": "MC",
+        "status": "offline"
+      }
+    ],
+    "projects": 9,
+    "color": "from-amber-500 to-yellow-600",
+    "createdDate": "Feb 2024",
+    "privacy": "private"
+  },
+  {
+    "id": "6",
+    "name": "Ingeniería de Producto",
+    "description": "Diseño CAD/CAM, prototipos y gestión del ciclo de vida del producto",
+    "members": [
+      {
+        "id": "18",
+        "name": "Martina Funes",
+        "role": "Diseñadora CAD",
+        "avatar": "MF",
+        "status": "online"
+      },
+      {
+        "id": "19",
+        "name": "Andrés Villalba",
+        "role": "Ingeniero de Producto",
+        "avatar": "AV",
+        "status": "online"
+      },
+      {
+        "id": "20",
+        "name": "Florencia Medina",
+        "role": "Analista PLM",
+        "avatar": "FM",
+        "status": "away"
+      },
+      {
+        "id": "21",
+        "name": "Cristian Barrios",
+        "role": "Prototipista",
+        "avatar": "CB",
+        "status": "online"
+      }
+    ],
+    "projects": 7,
+    "color": "from-indigo-500 to-blue-600",
+    "createdDate": "Ene 2024",
+    "privacy": "public"
+  }
+]

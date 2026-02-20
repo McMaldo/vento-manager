@@ -1,0 +1,110 @@
+[
+  {
+    "id": "1010",
+    "title": "Garra Hidráulica GH-400",
+    "client": "Aceros del Sur S.A.",
+    "progress": 75,
+    "status": "activo",
+    "lastUpdate": "2024-03-15",
+    "dueDate": "2024-06-30",
+    "team": 1,
+    "tags": ["hidráulica", "garra", "manipulación"]
+  },
+  {
+    "id": "1012",
+    "title": "Línea de Montaje Automotriz LMA-12",
+    "client": "Industrias Roca",
+    "progress": 100,
+    "status": "completado",
+    "lastUpdate": "2024-02-28",
+    "team": 2,
+    "tags": ["montaje", "automotriz", "automatización"]
+  },
+  {
+    "id": "1030",
+    "title": "Sistema de Prensado Hidráulico SPH-200",
+    "client": "MetalForm Argentina",
+    "progress": 45,
+    "status": "revisión",
+    "lastUpdate": "2024-03-10",
+    "dueDate": "2024-07-15",
+    "team": 1,
+    "tags": ["prensa", "hidráulica", "conformado"]
+  },
+  {
+    "id": "1032",
+    "title": "Brazo Robótico de Soldadura BR-7",
+    "client": "TecnoPlant S.R.L.",
+    "progress": 60,
+    "status": "activo",
+    "lastUpdate": "2024-03-18",
+    "dueDate": "2024-08-01",
+    "team": 3,
+    "tags": ["robótica", "soldadura", "automatización"]
+  },
+  {
+    "id": "2033",
+    "title": "Cinta Transportadora Modular CTM-5",
+    "client": "Logística Integral S.A.",
+    "progress": 20,
+    "status": "pausado",
+    "lastUpdate": "2024-01-22",
+    "dueDate": "2024-09-30",
+    "team": 2,
+    "tags": ["transporte", "modular", "logística"]
+  },
+  {
+    "id": "2034",
+    "title": "Estación de Ensamblaje EE-3",
+    "client": "Electrónica Pampa",
+    "progress": 88,
+    "status": "activo",
+    "lastUpdate": "2024-03-20",
+    "dueDate": "2024-04-30",
+    "team": 2,
+    "tags": ["ensamblaje", "electrónica", "montaje"]
+  },
+  {
+    "id": "2041",
+    "title": "Cilindro Hidráulico de Doble Efecto CDE-80",
+    "client": "Construcciones Pesadas Noroeste",
+    "progress": 100,
+    "status": "completado",
+    "lastUpdate": "2024-02-10",
+    "team": 1,
+    "tags": ["cilindro", "hidráulica", "doble efecto"]
+  },
+  {
+    "id": "2077",
+    "title": "Sistema SCADA para Línea de Pintura",
+    "client": "Pinturas Industriales Del Río",
+    "progress": 35,
+    "status": "activo",
+    "lastUpdate": "2024-03-17",
+    "dueDate": "2024-10-15",
+    "team": 3,
+    "tags": ["SCADA", "pintura", "control"]
+  },
+  {
+    "id": "2087",
+    "title": "Prototipo Garra Neumática GN-50",
+    "client": "Laboratorio de Manufactura UTNBA",
+    "progress": 55,
+    "status": "revisión",
+    "lastUpdate": "2024-03-05",
+    "dueDate": "2024-05-20",
+    "team": 1,
+    "tags": ["neumática", "garra", "prototipo"]
+  },
+  {
+    "id": "2190",
+    "title": "Renovación Línea de Corte LC-9",
+    "progress": 10,
+    "client": "Laminados del Centro",
+    "status": "pausado",
+    "lastUpdate": "2024-01-30",
+    "dueDate": "2024-12-01",
+    "team": 2,
+    "tags": ["corte", "renovación", "laminado"]
+  }
+]

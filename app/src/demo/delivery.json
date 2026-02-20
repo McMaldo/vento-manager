@@ -1,0 +1,34 @@
+[
+  {
+    "id": "1",
+    "title": "Prototipo Final UI/UX",
+    "project": "Rediseño Plataforma E-commerce",
+    "dueDate": "15 Feb 2026",
+    "priority": "alta",
+    "daysLeft": 6
+  },
+  {
+    "id": "2",
+    "title": "Testing de Integración",
+    "project": "App Mobile Banking",
+    "dueDate": "18 Feb 2026",
+    "priority": "media",
+    "daysLeft": 9
+  },
+  {
+    "id": "3",
+    "title": "Documentación Técnica",
+    "project": "Sistema de Gestión Interna",
+    "dueDate": "12 Feb 2026",
+    "priority": "alta",
+    "daysLeft": 3
+  },
+  {
+    "id": "4",
+    "title": "Revisión de Código",
+    "project": "Landing Page Campaña",
+    "dueDate": "20 Feb 2026",
+    "priority": "baja",
+    "daysLeft": 11
+  }
+]
