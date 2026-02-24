@@ -104,7 +104,7 @@ export default function Aside() {
           left: isMobile ? btnHover.position : undefined,
         }}
       >
-        <div className="w-full md:h-full h-7/10 md:w-7/10 bg-main rounded-b-full md:rounded-b-none md:rounded-r-full"></div>
+        <div className="w-full md:h-full h-7/10 md:w-7/10 bg-main rounded-b-full md:rounded-l-none md:rounded-r-full"></div>
       </div>
 
       <article className="hidden w-full md:flex items-center p-4 pb-8 gap-2 mt-auto">

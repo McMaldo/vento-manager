@@ -11,8 +11,10 @@ interface KanbanColProps {
     id: string,
     event: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
   ) => void;
+  // nuevo callback que el padre debe implementar para mover piezas entre columnas
+  onMovePart: (partId: string, fromColumnId: string, toColumnId: string) => void;
 }
-const KanbanCol: React.FC<KanbanColProps> = ({ column, toggleMenu }) => {
+const KanbanCol: React.FC<KanbanColProps> = ({ column, toggleMenu, onMovePart }) => {
   const [partList, setPartList] = useState<Part[]>(column.parts);
 
   const [isHovered, setHovered] = useState<boolean>(false);
@@ -31,6 +33,31 @@ const KanbanCol: React.FC<KanbanColProps> = ({ column, toggleMenu }) => {
       setAddPartBtnHeight(addPartBtn.current.scrollHeight);
     }
   }, []);
+
+  // sincroniza estado local cuando el padre actualiza column.parts
+  useEffect(() => {
+    setPartList(column.parts);
+  }, [column.parts]);
+
+  // DnD handlers
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault(); // necesario para permitir drop
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    const data = e.dataTransfer.getData("application/json") || e.dataTransfer.getData("text/plain");
+    if (!data) return;
+    try {
+      const parsed = JSON.parse(data);
+      const { partId, fromColumnId } = parsed;
+      if (!partId || !fromColumnId) return;
+      if (fromColumnId === column.id) return; // mismo column => no mover
+      onMovePart(partId, fromColumnId, column.id);
+    } catch {
+      // ignore malformed data
+    }
+  };
 
   return (
     <div
@@ -76,9 +103,14 @@ const KanbanCol: React.FC<KanbanColProps> = ({ column, toggleMenu }) => {
       </div>
 
       {/* Scrollable Tasks */}
-      <div className="max-h-full overflow-y-scroll custom-scroll space-y-4 p-2">
+      <div
+        className="max-h-full overflow-y-scroll custom-scroll space-y-4 p-2"
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+      >
         {partList.map((part) => (
-          <KanbanPart key={part.id} part={part} />
+          // ahora pasamos columnId para que KanbanPart haga drag con origen
+          <KanbanPart key={part.id} part={part} columnId={column.id} />
         ))}
       </div>
     </div>

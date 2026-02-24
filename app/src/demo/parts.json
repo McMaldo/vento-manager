@@ -13,7 +13,17 @@
       {
         "id": "2",
         "title": "Pieza 1008",
-        "description": "Acoplamiento flexible de mordazas para transmisión entre ejes"
+        "description": "Acoplamiento flexible de mordazas para transmisión entre ejes",
+        "process": [
+          {
+            "isCompleted": false,
+            "name": "soldadura"
+          },
+          {
+            "isCompleted": false,
+            "name": "pintado"
+          }
+        ]
       },
       {
         "id": "3",
@@ -23,7 +33,25 @@
       {
         "id": "4",
         "title": "Pieza 1010",
-        "description": "Tuerca autoblocante M16 con inserto de nylon para vibraciones"
+        "description": "Tuerca autoblocante M16 con inserto de nylon para vibraciones",
+        "process": [
+          {
+            "isCompleted": false,
+            "name": "solapado"
+          },
+          {
+            "isCompleted": false,
+            "name": "soldadura"
+          },
+          {
+            "isCompleted": false,
+            "name": "agujereado"
+          },
+          {
+            "isCompleted": false,
+            "name": "pintado"
+          }
+        ]
       }
     ]
   },
@@ -36,7 +64,17 @@
       {
         "id": "5",
         "title": "Pieza 1011",
-        "description": "Manguera hidráulica de alta presión con racor NPT 3/8"
+        "description": "Manguera hidráulica de alta presión con racor NPT 3/8",
+        "process": [
+          {
+            "isCompleted": true,
+            "name": "soldadura"
+          },
+          {
+            "isCompleted": false,
+            "name": "sublimado"
+          }
+        ]
       },
       {
         "id": "6",
@@ -47,6 +85,32 @@
         "id": "7",
         "title": "Pieza 1016",
         "description": "Guía lineal de recirculación de bolas para desplazamiento de precisión"
+      },
+
+      {
+        "id": "13",
+        "title": "Pieza 1021",
+        "description": "Polea dentada de aluminio paso 5M para sistema de transmisión por correa"
+      },
+      {
+        "id": "14",
+        "title": "Pieza 1022",
+        "description": "Cadena de arrastre portacables para gestión de cableado en ejes móviles",
+        "process": [
+          {
+            "isCompleted": false,
+            "name": "soldadura"
+          },
+          {
+            "isCompleted": false,
+            "name": "sublimado"
+          }
+        ]
+      },
+      {
+        "id": "15",
+        "title": "Pieza 1023",
+        "description": "Mordaza de garra hidráulica recubierta de caucho para piezas delicadas"
       }
     ]
   },
