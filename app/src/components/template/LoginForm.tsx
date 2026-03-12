@@ -77,7 +77,7 @@ const LoginForm: React.FC<LoginProps> = ({ formOpened, setFormOpened }) => {
         isExtended ? "w-full sm:w-80 p-4 opacity-100" : "w-0 opacity-0"
       } flex flex-col items-center gap-4 pr-0 h-full justify-center transition-all`}
     >
-      <Logo className="mb-6 size-20" color="icon" />
+      <Logo className="mb-6 size-20" />
 
       {/* Toggle Login / Register */}
       <div className="relative w-full flex text-lg">

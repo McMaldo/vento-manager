@@ -1,34 +1,30 @@
 [
   {
     "id": "1",
-    "title": "Prototipo Final UI/UX",
-    "project": "Rediseño Plataforma E-commerce",
-    "dueDate": "15 Feb 2026",
-    "priority": "alta",
-    "daysLeft": 6
+    "title": "Electroválvula solenoide 5/2 vías para control neumático",
+    "project": "Garra Hidráulica GH-400",
+    "dueDate": "2026-04-15",
+    "priority": "alta"
   },
   {
     "id": "2",
-    "title": "Testing de Integración",
-    "project": "App Mobile Banking",
-    "dueDate": "18 Feb 2026",
-    "priority": "media",
-    "daysLeft": 9
+    "title": "Acoplamiento flexible de mordazas para transmisión entre ejes",
+    "project": "Garra Hidráulica GH-400",
+    "dueDate": "2026-04-18",
+    "priority": "media"
   },
   {
     "id": "3",
-    "title": "Documentación Técnica",
-    "project": "Sistema de Gestión Interna",
-    "dueDate": "12 Feb 2026",
-    "priority": "alta",
-    "daysLeft": 3
+    "title": "Tornillo de cabeza hexagonal M16 grado 8.8 para ensamblaje estructural",
+    "project": "Garra Hidráulica GH-400",
+    "dueDate": "2026-04-12",
+    "priority": "alta"
   },
   {
     "id": "4",
-    "title": "Revisión de Código",
-    "project": "Landing Page Campaña",
-    "dueDate": "20 Feb 2026",
-    "priority": "baja",
-    "daysLeft": 11
+    "title": "Tuerca autoblocante M16 con inserto de nylon para vibraciones",
+    "project": "Garra Hidráulica GH-400",
+    "dueDate": "2026-04-20",
+    "priority": "baja"
   }
 ]

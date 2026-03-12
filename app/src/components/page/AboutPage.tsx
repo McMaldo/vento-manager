@@ -53,34 +53,8 @@ const AboutPage: React.FC = () => {
 
   return (
     <>
-      <style>{`
-        @keyframes floatAnimation {
-          0%, 100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-10px);
-          }
-        }
-        .value-card {
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .value-card:hover {
-          transform: translateY(-12px) rotate(2deg);
-        }
-        .team-card {
-          transition: all 0.3s ease;
-        }
-        .team-card:hover {
-          transform: scale(1.05);
-        }
-        .float-element {
-          animation: floatAnimation 3s ease-in-out infinite;
-        }
-      `}</style>
-
       {/* Hero Section */}
-      <section className="relative bg-linear-to-br from-purple-600 via-indigo-600 to-blue-700 text-font py-32 px-8 overflow-hidden rounded-lg min-h-full">
+      <section className="relative bg-linear-to-br from-main to-blue-300  dark:from-purple-600 dark:via-indigo-600 dark:to-blue-700 text-font py-32 px-8 overflow-hidden rounded-lg min-h-full">
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center animate-slide-up">
             <h1 className="text-7xl font-bold mb-6 leading-tight">
@@ -88,10 +62,9 @@ const AboutPage: React.FC = () => {
               <br />
               del Trabajo Colaborativo
             </h1>
-            <p className="text-2xl text-purple-100 max-w-3xl mx-auto leading-relaxed">
-              Desde 2020, ayudamos a equipos de todo el mundo a organizar
-              proyectos, colaborar eficientemente y alcanzar sus objetivos más
-              ambiciosos
+            <p className="text-2xl text-font max-w-3xl mx-auto leading-relaxed">
+              Ayudamos a equipos de todo el mundo a organizar proyectos,
+              colaborar eficientemente y alcanzar sus objetivos más ambiciosos
             </p>
           </div>
 
@@ -107,56 +80,12 @@ const AboutPage: React.FC = () => {
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <div className="bg-white/10 backdrop-blur-sm w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-white/20">
-                  <FaIcon name={stat.icon} size="size-7" />
+                  <FaIcon name={stat.icon} size="size-7" accent />
                 </div>
                 <div className="text-4xl font-bold mb-2">{stat.value}</div>
-                <div className="text-purple-200 font-medium">{stat.label}</div>
+                <div className="text-font-light font-medium">{stat.label}</div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Story Section */}
-      <section className="py-24 px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="animate-slide-up">
-            <h2 className="text-5xl font-bold text-font mb-8 text-center">
-              Nuestra Historia
-            </h2>
-            <div className="space-y-6 text-lg text-font-light leading-relaxed">
-              <p>
-                Todo comenzó con una frustración compartida. María y Carlos,
-                nuestros fundadores, trabajaban en diferentes startups pero
-                enfrentaban el mismo problema:{" "}
-                <strong className="text-font">
-                  las herramientas de gestión de proyectos eran demasiado
-                  complejas o demasiado simples
-                </strong>
-                . Nada parecía encontrar el balance perfecto.
-              </p>
-              <p>
-                Durante una conferencia tecnológica en Barcelona en 2020, se
-                conocieron y descubrieron que compartían esta visión. ¿Por qué
-                no crear algo diferente? Una plataforma que fuera{" "}
-                <strong className="text-font">
-                  potente sin ser abrumadora, intuitiva sin ser limitada
-                </strong>
-                .
-              </p>
-              <p>
-                Seis meses después, lanzamos nuestra primera beta con 100
-                usuarios. Sus comentarios fueron invaluables. Cada función que
-                agregamos, cada interfaz que diseñamos, fue moldeada por
-                conversaciones reales con equipos reales enfrentando desafíos
-                reales.
-              </p>
-              <p className="text-xl font-semibold text-font border-l-4 border-main pl-6 py-2 bg-btn rounded">
-                Hoy, más de 50,000 usuarios en 45 países confían en nosotros
-                para gestionar sus proyectos más importantes. Y apenas estamos
-                comenzando.
-              </p>
-            </div>
           </div>
         </div>
       </section>
@@ -182,7 +111,7 @@ const AboutPage: React.FC = () => {
                 style={{ animationDelay: `${0.1 + index * 0.1}s` }}
               >
                 <div className="bg-linear-to-br from-purple-500 to-indigo-600 w-20 h-20 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
-                  <FaIcon name={value.icon} size="size-9" />
+                  <FaIcon name={value.icon} size="size-9" accent />
                 </div>
                 <h3 className="text-2xl font-bold text-font mb-4">
                   {value.title}

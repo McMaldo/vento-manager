@@ -21,6 +21,16 @@ const HelpPage = lazy(() => import("./components/page/HelpPage.tsx"));
 const AboutPage = lazy(() => import("./components/page/AboutPage.tsx"));
 const ProjectPage = lazy(() => import("./components/page/ProjectPage.tsx"));
 
+// Init Theme
+const saved = localStorage.getItem("theme") ?? "system";
+const resolved =
+  saved === "system"
+    ? window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "frappe"
+      : "latte"
+    : saved;
+document.documentElement.setAttribute("data-theme", resolved);
+
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <Routes>

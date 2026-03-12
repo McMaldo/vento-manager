@@ -2,6 +2,7 @@ import React from "react";
 import FaIcon from "../atom/FaIcon";
 import Logo from "../atom/Logo";
 import Footer from "../partial/Footer";
+import { getGradient } from "../../utils/gradient";
 
 interface CompanyValue {
   id: string;
@@ -44,7 +45,7 @@ const LandingPage: React.FC = () => {
       title: "Transparencia Total",
       description:
         "Sin sorpresas, sin letra pequeña. Somos claros con nuestros precios, políticas y el uso de tus datos.",
-      icon: "eye",
+      icon: "lock",
     },
   ];
 
@@ -57,14 +58,13 @@ const LandingPage: React.FC = () => {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative bg-linear-to-br from-main via-indigo-500 to-blue-700 text-font p-8 overflow-hidden rounded-2xl min-h-full flex items-center justify-center">
+      <section
+        className={`relative ${getGradient()} text-font p-8 overflow-hidden rounded-2xl min-h-full flex items-center justify-center`}
+      >
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="flex flex-col items-center text-center animate-slide-up">
             <div className="flex gap-4 items-center lg:text-start">
-              <Logo
-                className="hidden lg:block size-20 xl:size-30"
-                color="font"
-              />
+              <Logo className="hidden lg:block size-20 xl:size-30" />
               <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
                 Construimos el Futuro
                 <br />
@@ -72,10 +72,9 @@ const LandingPage: React.FC = () => {
               </h1>
             </div>
 
-            <p className="text-lg lg:text-2xl text-purple-100 max-w-3xl leading-relaxed">
-              Desde 2020, ayudamos a equipos de todo el mundo a organizar
-              proyectos, colaborar eficientemente y alcanzar sus objetivos más
-              ambiciosos
+            <p className="text-lg lg:text-2xl text-font max-w-3xl leading-relaxed">
+              Desde 2026, ayudamos a equipos a organizar proyectos, colaborar
+              eficientemente y alcanzar sus objetivos más ambiciosos
             </p>
           </div>
 
@@ -91,12 +90,12 @@ const LandingPage: React.FC = () => {
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <div className="bg-white/10 backdrop-blur-sm w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-white/20">
-                  <FaIcon name={stat.icon} size="size-7" />
+                  <FaIcon name={stat.icon} size="size-7" accent />
                 </div>
                 <div className="text-3xl lg:text-4xl font-bold mb-2">
                   {stat.value}
                 </div>
-                <div className="text-purple-200 font-medium">{stat.label}</div>
+                <div className="text-font-light font-medium">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -120,18 +119,22 @@ const LandingPage: React.FC = () => {
             {values.map((value, index) => (
               <div
                 key={value.id}
-                className="value-card border-2 border-btn-border rounded-3xl p-10 shadow-xl hover:shadow-2xl animate-slide-up"
+                className="value-card flex gap-6 border-2 border-btn-border rounded-3xl p-6 shadow-xl hover:shadow-2xl animate-slide-up"
                 style={{ animationDelay: `${0.1 + index * 0.1}s` }}
               >
-                <div className="bg-linear-to-br from-purple-500 to-indigo-600 w-20 h-20 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
-                  <FaIcon name={value.icon} size="size-9" />
+                <div
+                  className={`shrink-0 ${getGradient()} w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg`}
+                >
+                  <FaIcon name={value.icon} size="size-9" accent />
                 </div>
-                <h3 className="text-2xl font-bold text-font mb-4">
-                  {value.title}
-                </h3>
-                <p className="text-font-light text-lg leading-relaxed">
-                  {value.description}
-                </p>
+                <div className="flex flex-col gap-4">
+                  <h3 className="w-full text-2xl font-bold text-font">
+                    {value.title}
+                  </h3>
+                  <p className="text-font-light text-lg leading-relaxed">
+                    {value.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -139,10 +142,10 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* Mission Section */}
-      <section className="py-24 px-8 bg-linear-to-r from-purple-600 via-indigo-600 to-blue-600 text-white">
-        <div className="max-w-5xl mx-auto text-center animate-slide-up">
+      <section className={`py-24 px-8 ${getGradient(2)}`}>
+        <div className="max-w-5xl mx-auto text-center animate-slide-up text-font">
           <h2 className="text-5xl font-bold mb-8">Nuestra Misión</h2>
-          <p className="text-2xl text-purple-100 leading-relaxed mb-12">
+          <p className="text-2xl leading-relaxed mb-12">
             Empoderar a cada equipo del mundo para que transforme sus ideas en
             realidad, eliminando la complejidad innecesaria y amplificando la
             colaboración humana.
@@ -151,9 +154,12 @@ const LandingPage: React.FC = () => {
             <button className="px-8 py-4 bg-base text-main font-bold rounded-xl hover:shadow-2xl transition-all text-xl">
               Únete a nuestro equipo
             </button>
-            <button className="px-10 py-5 bg-main text-base font-bold rounded-xl transition-all text-xl">
+            <a
+              href="mailto:vento-manager@gmail.com"
+              className="px-10 py-5 bg-main text-base font-bold rounded-xl transition-all text-xl"
+            >
               Contáctanos
-            </button>
+            </a>
           </div>
         </div>
       </section>
@@ -162,65 +168,10 @@ const LandingPage: React.FC = () => {
       <section className="py-24 px-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16 animate-slide-up">
-            <h2 className="text-5xl font-bold text-font mb-4">
-              Nuestro Recorrido
-            </h2>
+            <h2 className="text-5xl font-bold text-font mb-4">Forma de Uso</h2>
             <p className="text-xl text-font-light">
-              Los hitos más importantes en nuestra historia
+              Una ligera guía del empleo de la aplicación.
             </p>
-          </div>
-
-          <div className="space-y-12">
-            {[
-              {
-                year: "2020",
-                title: "El Comienzo",
-                description:
-                  "Fundación de la empresa y lanzamiento de la primera beta con 100 usuarios pioneros.",
-              },
-              {
-                year: "2021",
-                title: "Crecimiento Exponencial",
-                description:
-                  "Alcanzamos los 10,000 usuarios y lanzamos integraciones con Slack y Google Workspace.",
-              },
-              {
-                year: "2022",
-                title: "Expansión Global",
-                description:
-                  "Apertura de oficinas en España y México. Superamos los 25,000 usuarios activos.",
-              },
-              {
-                year: "2023",
-                title: "Nuevas Funcionalidades",
-                description:
-                  "Lanzamiento de colaboración en tiempo real, modo oscuro y aplicaciones móviles nativas.",
-              },
-              {
-                year: "2024",
-                title: "Madurez y Escala",
-                description:
-                  "50,000+ usuarios en 45 países. Reconocidos como una de las 50 startups más prometedoras.",
-              },
-            ].map((milestone, index) => (
-              <div
-                key={index}
-                className="flex gap-8 items-start animate-slide-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="bg-linear-to-br from-purple-600 to-indigo-600 text-font w-24 h-24 rounded-2xl flex items-center justify-center font-bold text-2xl shadow-xl shrink-0">
-                  {milestone.year}
-                </div>
-                <div className="flex-1 bg-base border-2 border-btn-border rounded-2xl p-6 shadow-lg">
-                  <h3 className="text-2xl font-bold text-font mb-2">
-                    {milestone.title}
-                  </h3>
-                  <p className="text-font-light text-lg leading-relaxed">
-                    {milestone.description}
-                  </p>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>

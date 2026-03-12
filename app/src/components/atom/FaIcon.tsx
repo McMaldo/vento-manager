@@ -4,6 +4,7 @@ interface FaIconProps {
   light?: boolean;
   invert?: boolean;
   transparent?: boolean;
+  accent?: boolean;
 }
 
 const FaIcon: React.FC<FaIconProps> = ({
@@ -12,12 +13,13 @@ const FaIcon: React.FC<FaIconProps> = ({
   light = false,
   invert = false,
   transparent = false,
+  accent = false,
 }) => {
   const iconName = name.toLowerCase();
 
   return (
     <svg
-      className={`${light ? "fa-icon-light" : invert ? "fa-icon-invert" : "fa-icon"} ${transparent ? "opacity-0" : "opacity-100"} ${size} inline-block select-none`}
+      className={`${light ? "fa-icon-light" : invert ? "fa-icon-invert" : accent ? "fa-icon-accent" : "fa-icon"} ${transparent ? "opacity-0" : "opacity-100"} ${size} inline-block select-none`}
       aria-hidden="true"
     >
       <use xlinkHref={`/icon/faIcons.svg#${iconName}`} />

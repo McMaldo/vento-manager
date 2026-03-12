@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import FaIcon from "../atom/FaIcon";
+import type { Theme } from "../../hook/useTheme";
+import useTheme from "../../hook/useTheme";
 
 interface SettingsSection {
   id: string;
@@ -20,7 +22,13 @@ const SettingsPage: React.FC = () => {
     sms: true,
     actualizaciones: true,
   });
-  const [tema, setTema] = useState("claro");
+  const { theme, setTheme } = useTheme();
+  const themeList: { value: Theme; label: string }[] = [
+    { value: "light", label: "Claro" },
+    { value: "dark", label: "Oscuro" },
+    { value: "system", label: "Sistema" },
+  ];
+
   const [idioma, setIdioma] = useState("es");
   const [privacidad, setPrivacidad] = useState({
     perfilPublico: false,
@@ -240,39 +248,31 @@ const SettingsPage: React.FC = () => {
                 Tema de la interfaz
               </label>
               <div className="grid grid-cols-3 gap-4">
-                <button
-                  onClick={() => setTema("claro")}
-                  className={`p-6 rounded-xl border-2 transition-all ${
-                    tema === "claro"
-                      ? "border-font bg-base shadow-lg"
-                      : "border-btn-border hover:border-font-light"
-                  }`}
-                >
-                  <div className="w-full h-20 bg-linear-to-br from-white to-gray-100 rounded-lg mb-3 border border-btn-border"></div>
-                  <p className="text-font font-semibold text-sm">Claro</p>
-                </button>
-                <button
-                  onClick={() => setTema("oscuro")}
-                  className={`p-6 rounded-xl border-2 transition-all ${
-                    tema === "oscuro"
-                      ? "border-font bg-base shadow-lg"
-                      : "border-btn-border hover:border-font-light"
-                  }`}
-                >
-                  <div className="w-full h-20 bg-linear-to-br from-gray-800 to-gray-900 rounded-lg mb-3"></div>
-                  <p className="text-font font-semibold text-sm">Oscuro</p>
-                </button>
-                <button
-                  onClick={() => setTema("auto")}
-                  className={`p-6 rounded-xl border-2 transition-all ${
-                    tema === "auto"
-                      ? "border-font bg-base shadow-lg"
-                      : "border-btn-border hover:border-font-light"
-                  }`}
-                >
-                  <div className="w-full h-20 bg-linear-to-r from-white via-gray-400 to-gray-900 rounded-lg mb-3"></div>
-                  <p className="text-font font-semibold text-sm">Automático</p>
-                </button>
+                {themeList.map((themeBtn, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setTheme(themeBtn.value)}
+                    className={`p-6 rounded-xl border-2 transition-all ${
+                      theme === themeBtn.value
+                        ? "border-font bg-base shadow-lg"
+                        : "border-btn-border hover:border-font-light"
+                    }`}
+                  >
+                    <div
+                      className={
+                        "w-full h-20 bg-linear-to-r rounded-lg mb-3 border border-btn-border " +
+                        (themeBtn.value === "light"
+                          ? "from-gray-100 to-gray-200"
+                          : themeBtn.value === "dark"
+                            ? "from-gray-600 to-gray-900"
+                            : "from-gray-200 via-gray-400 to-gray-900")
+                      }
+                    ></div>
+                    <p className="text-font font-semibold text-sm">
+                      {themeBtn.label}
+                    </p>
+                  </button>
+                ))}
               </div>
             </div>
 

@@ -1,21 +1,24 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import type { link } from "../../types/link";
 import FaIcon from "../atom/FaIcon.tsx";
 import useWindowWidth from "../../hook/useWindowWidth";
+import useTheme from "../../hook/useTheme.ts";
 
 export default function Aside() {
   const [isExpanded, setExpanded] = useState(false);
   const location = useLocation();
   const width = useWindowWidth();
   const isMobile = width < 768;
+  const navigate = useNavigate();
+  const { theme } = useTheme();
 
   const btns: link[] = [
     { icon: "house", name: "inicio", href: "inicio" },
     { icon: "folder", name: "proyectos", href: "proyectos" },
     { icon: "user-group", name: "equipos", href: "equipos" },
     { icon: "gear", name: "ajustes", href: "ajustes" },
-    { icon: "sun", name: "apariencia", href: "ajustes/apariencia" },
+    { icon: theme === "dark" ? "moon" : "sun", name: "apariencia", href: "ajustes/apariencia" },
     { icon: "question-circle", name: "ayuda", href: "ayuda" },
     { icon: "info-circle", name: "acerca", href: "acerca" },
   ];
@@ -51,7 +54,7 @@ export default function Aside() {
       ref={linkContainer}
       className={
         "[grid-area:aside] relative w-full flex items-center md:items-start md:flex-col bg-base transition-all " +
-        (isExpanded || !isMobile ? "w-50" : "w-17")
+        (isExpanded ? "md:w-50" : "md:w-17")
       }
       onMouseEnter={() => setExpanded(true)}
       onMouseLeave={() => setExpanded(false)}
@@ -119,6 +122,9 @@ export default function Aside() {
           UserName
         </Link>
         <button
+          onClick={() => {
+            navigate("/landing");
+          }}
           className={`transition-opacity ${isExpanded ? "opacity-100" : "hidden opacity-0"}`}
           title="Cerrar Sesión"
         >

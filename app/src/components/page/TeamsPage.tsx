@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import FaIcon from "../atom/FaIcon";
 import type { Team } from "../../types/team";
 import data from "../../demo/teams.json";
+import DetailsButton from "../atom/buttons/Details";
 
 const TeamsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,7 +18,6 @@ const TeamsPage: React.FC = () => {
       case "away":
         return "bg-amber-500";
       case "offline":
-        return "bg-slate-400";
       default:
         return "bg-slate-400";
     }
@@ -49,7 +49,7 @@ const TeamsPage: React.FC = () => {
           </p>
         </div>
         <button className="px-5 py-2.5 bg-icon text-mantle rounded-lg hover:bg-font transition-colors font-medium text-sm">
-          Nuevo Proyecto
+          Nuevo Equipo
         </button>
       </div>
 
@@ -222,12 +222,7 @@ const TeamsPage: React.FC = () => {
                     <FaIcon name="calendar" size="size-4" light />
                     <span>{team.createdDate}</span>
                   </div>
-                  <Link
-                    to={`/equipo/${team.id}`}
-                    className="text-sm font-semibold text-icon hover:text-font transition-colors hover:bg-base px-3 py-2 rounded-md"
-                  >
-                    Ver detalles →
-                  </Link>
+                  <DetailsButton href={`/equipo/${team.id}`} />
                 </div>
               </div>
             </article>

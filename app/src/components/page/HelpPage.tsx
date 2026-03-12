@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import FaIcon from "../atom/FaIcon";
+import { getGradient } from "../../utils/gradient";
+import DetailsButton from "../atom/buttons/Details";
 
 interface FAQItem {
   id: string;
@@ -135,12 +137,14 @@ const HelpPage: React.FC = () => {
   return (
     <>
       {/* Hero Section */}
-      <section className="grid place-items-center bg-linear-to-r from-purple-800 via-indigo-600 to-blue-700 text-font rounded-lg p-4 min-h-1/2">
+      <section
+        className={`grid place-items-center ${getGradient(2)} text-font rounded-lg p-4 min-h-1/2`}
+      >
         <div className="max-w-4xl mx-auto text-center animate-fade-up">
           <h1 className="text-6xl font-black mb-6 tracking-tight">
             Centro de Ayuda
           </h1>
-          <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
+          <p className="text-xl text-font-light mb-10 max-w-2xl mx-auto">
             Encuentra respuestas rápidas, guías detalladas y soporte para sacar
             el máximo provecho de la plataforma
           </p>
@@ -163,7 +167,7 @@ const HelpPage: React.FC = () => {
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-5 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                className="absolute right-5 top-1/2 transform -translate-y-1/2 transition-colors"
               >
                 <FaIcon name="xmark" size="size-5" />
               </button>
@@ -213,10 +217,7 @@ const HelpPage: React.FC = () => {
                     <span className="text-xs font-semibold text-main bg-btn px-3 py-1 rounded-full">
                       {category.articleCount} artículos
                     </span>
-                    <div className="flex items-center gap-2 text-font-light hover:text-main">
-                      <span>Ver Categoría</span>
-                      <FaIcon name="arrow-right" size="size-4" light />
-                    </div>
+                    <DetailsButton label="Ver Categoría" href="" />
                   </div>
                 </button>
               ))}
@@ -331,7 +332,7 @@ const HelpPage: React.FC = () => {
                       setSearchQuery("");
                       setActiveCategory(null);
                     }}
-                    className="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors"
+                    className="px-6 py-3 bg-main text-white font-semibold rounded-lg hover:bg-indigo-500 transition-colors"
                   >
                     Limpiar búsqueda
                   </button>
@@ -343,7 +344,7 @@ const HelpPage: React.FC = () => {
 
         {/* Contact Support Section */}
         <div
-          className="flex flex-col items-center mt-20 bg-linear-to-r from-main to-teal-700 rounded-3xl p-12 text-mantle text-center animate-scale-in"
+          className="flex flex-col items-center mt-20 bg-linear-to-r from-main to-blue-400 dark:to-blue-700 rounded-3xl p-12 text-mantle text-center animate-scale-in"
           style={{ animationDelay: "0.6s" }}
         >
           <h2 className="text-4xl font-bold mb-4">¿Aún necesitas ayuda?</h2>

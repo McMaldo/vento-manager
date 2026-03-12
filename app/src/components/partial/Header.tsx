@@ -1,4 +1,5 @@
 import type React from "react";
+import Logo from "../atom/Logo";
 
 interface HeaderProps {
   variant?: string;
@@ -10,11 +11,7 @@ const Header: React.FC<HeaderProps> = ({ variant, setFormOpened }) => {
     <header
       className={`[grid-area:header] w-full px-4 pt-0 bg-base flex justify-between ${variant == "landing" ? "pb-2 landing" : "pb-4"}`}
     >
-      <img
-        src="/logo/imagotipo.svg"
-        alt="logo"
-        className="h-full select-none"
-      ></img>
+      <Logo imagotype className="h-full select-none" />
       {variant == "landing" && setFormOpened && (
         <div className="flex gap-2 h-full text-lg">
           <button

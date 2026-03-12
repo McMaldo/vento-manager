@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import FaIcon from "../atom/FaIcon";
-import { getStatusColor, getProgressColor } from "../../utils/projectColor";
 import type { Project } from "../../types/project";
 import data from "../../demo/projects.json";
+import ProjectCard from "../molecule/ProjectCard";
 
 const ProjectsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -191,94 +191,7 @@ const ProjectsPage: React.FC = () => {
           }
         >
           {filteredProjects.map((project, index) => (
-            <article
-              key={project.id}
-              className={`project-card rounded-2xl p-4 border border-btn-border shadow-sm transition-transform ease-out hover:-translate-y-2 animate-slide-in ${
-                viewMode === "list" ? "flex items-center gap-6" : ""
-              }`}
-              style={{ animationDelay: `${0.3 + index * 0.05}s` }}
-            >
-              <div className={viewMode === "list" ? "flex-1" : ""}>
-                <div className="flex items-start justify-between mb-4">
-                  <div
-                    className={`flex-1 ${viewMode === "list" ? "flex space-x-2 flex-wrap" : ""}`}
-                  >
-                    <div
-                      className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-2 ${getStatusColor(project.status)}`}
-                    >
-                      {project.status.toUpperCase()}
-                    </div>
-                    <h3 className="text-xl font-bold text-font">
-                      {project.title}
-                    </h3>
-                    <p className="text-icon text-sm font-medium w-full">
-                      {project.client}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Tags */}
-                {project.tags && (
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag, idx) => (
-                      <span
-                        key={idx}
-                        className="text-xs px-2 py-1 bg-base text-font-light rounded border border-btn-border"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                {/* Progress Bar */}
-                <div className="mb-4">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-xs font-semibold text-font-light">
-                      Progreso
-                    </span>
-                    <span className="text-xs font-bold text-font">
-                      {project.progress}%
-                    </span>
-                  </div>
-                  <div className="h-2 bg-base rounded-full overflow-hidden">
-                    <div
-                      className={`progress-bar h-full bg-linear-to-r ${getProgressColor(project.status)} rounded-full`}
-                      style={{ width: `${project.progress}%` }}
-                    ></div>
-                  </div>
-                </div>
-
-                {/* Meta Info */}
-                <div className="flex items-center justify-between gap-4 mb-4 text-xs text-font-light">
-                  {project.team && (
-                    <div className="flex items-center gap-1">
-                      <FaIcon name="users" size="size-3" />
-                      <span>{project.team} miembros</span>
-                    </div>
-                  )}
-                  {project.dueDate && (
-                    <div className="flex items-center gap-1">
-                      <FaIcon name="calendar" size="size-3" />
-                      <span>{project.dueDate}</span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Footer */}
-                <div className="flex items-center justify-between pt-2 border-t border-btn-border">
-                  <span className="text-xs text-font-light">
-                    Actualizado {project.lastUpdate}
-                  </span>
-                  <Link
-                    to={"/proyecto/" + project.id}
-                    className="text-sm font-semibold text-icon hover:text-font transition-colors hover:bg-base px-3 py-2 rounded-md"
-                  >
-                    Ver detalles →
-                  </Link>
-                </div>
-              </div>
-            </article>
+            <ProjectCard key={index} project={project} index={index} detailed />
           ))}
         </div>
       ) : (
