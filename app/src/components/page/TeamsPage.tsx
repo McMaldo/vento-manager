@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import FaIcon from "../atom/FaIcon";
 import type { Team } from "../../types/team";
 import data from "../../demo/teams.json";

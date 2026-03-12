@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { currentDate, daysLeft } from "../../utils/date";
-import { getStatusColor, getProgressColor } from "../../utils/projectColor";
+import { getProgressColor } from "../../utils/projectColor";
 import type { Project } from "../../types/project";
 import type { Delivery } from "../../types/delivery";
 import data from "../../demo/projects.json";
 import data2 from "../../demo/delivery.json";
-import DetailsButton from "../atom/buttons/Details";
 import ProjectCard from "../molecule/ProjectCard";
 
 const MainPage: React.FC = () => {
