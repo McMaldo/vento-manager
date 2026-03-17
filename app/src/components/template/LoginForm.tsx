@@ -4,6 +4,7 @@ import axios from "axios";
 import Logo from "../atom/Logo";
 import ExpandMessage from "../atom/ExpandMessage";
 import FormInput from "../molecule/FormInput";
+import Input from "../atom/Input";
 
 // Configuración global recomendada (idealmente en un archivo axios.ts separado)
 // axios.defaults.withCredentials = true;
@@ -112,6 +113,7 @@ const LoginForm: React.FC<LoginProps> = ({ formOpened, setFormOpened }) => {
 
       {/* Formulario */}
       <form onSubmit={handleSubmit} className="w-full flex flex-col">
+        <Input label="Email" value="Ingresar Email" />
         <FormInput
           label="Email"
           type="email"
@@ -157,7 +159,7 @@ const LoginForm: React.FC<LoginProps> = ({ formOpened, setFormOpened }) => {
         />
         <ExpandMessage
           message={error}
-          className="text-red-400"
+          className="text-red-600 dark:text-red-400"
           isOpened={error !== undefined || error !== null}
         />
         <input

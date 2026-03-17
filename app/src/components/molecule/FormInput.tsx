@@ -40,7 +40,7 @@ const FormInput: React.FC<FormInputProps> = ({
         tabIndex={index}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeHolder}
-        className="w-full bg-mantle px-4 py-2 outline-none text-lg"
+        className="w-full px-4 py-2 border border-btn-border rounded-lg focus:outline-none focus:ring-2 focus:ring-opacity-50 bg-base text-font transition-all"
         required={required}
       />
     </>

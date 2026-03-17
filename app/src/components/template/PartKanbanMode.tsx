@@ -5,12 +5,10 @@ import ProcessCheck from "../atom/ProcessCheck";
 import FaIcon from "../atom/FaIcon";
 import DetailsButton from "../atom/buttons/Details";
 
-interface KanbanPartProps {
+const PartKanbanMode: React.FC<{
   part: Part;
   columnId: string;
-}
-
-const KanbanPart: React.FC<KanbanPartProps> = ({ part, columnId }) => {
+}> = ({ part, columnId }) => {
   const [partProps, setPartProps] = useState<Part>(part);
   const [isDraging, setDraging] = useState<boolean>(false);
   const [isHovered, setHovered] = useState<boolean>(false);
@@ -99,7 +97,7 @@ const KanbanPart: React.FC<KanbanPartProps> = ({ part, columnId }) => {
           <span>Agregar Proceso</span>
         </button>
         {partProps.store && (
-          <div className="flex gap-2">
+          <div className="flex gap-2 pt-1">
             <span className="w-fit px-2 border border-btn-border rounded-xl text-sm text-icon">
               Almacen {partProps.store.id}
             </span>
@@ -135,4 +133,4 @@ const KanbanPart: React.FC<KanbanPartProps> = ({ part, columnId }) => {
     </div>
   );
 };
-export default KanbanPart;
+export default PartKanbanMode;

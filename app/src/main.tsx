@@ -20,6 +20,7 @@ const SettingsPage = lazy(() => import("./components/page/SettingsPage.tsx"));
 const HelpPage = lazy(() => import("./components/page/HelpPage.tsx"));
 const AboutPage = lazy(() => import("./components/page/AboutPage.tsx"));
 const ProjectPage = lazy(() => import("./components/page/ProjectPage.tsx"));
+const PartPage = lazy(() => import("./components/page/PartPage.tsx"));
 
 // Init Theme
 const saved = localStorage.getItem("theme") ?? "system";
@@ -74,6 +75,14 @@ createRoot(document.getElementById("root")!).render(
           element={
             <Suspense fallback={<Loading />}>
               <ProjectPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/proyecto/:projectId/part/:partId"
+          element={
+            <Suspense fallback={<Loading />}>
+              <PartPage />
             </Suspense>
           }
         />

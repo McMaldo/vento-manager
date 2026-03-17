@@ -9,7 +9,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ variant, setFormOpened }) => {
   return (
     <header
-      className={`[grid-area:header] w-full px-4 pt-0 bg-base flex justify-between ${variant == "landing" ? "pb-2 landing" : "pb-4"}`}
+      className={`[grid-area:header] w-full px-4 pt-0 bg-base flex justify-between transition-all ${variant == "landing" ? "pb-2 landing" : "pb-4"}`}
     >
       <Logo imagotype className="h-full select-none" />
       {variant == "landing" && setFormOpened && (

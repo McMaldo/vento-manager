@@ -3,6 +3,7 @@ import FaIcon from "../atom/FaIcon";
 import type { Team } from "../../types/team";
 import data from "../../demo/teams.json";
 import DetailsButton from "../atom/buttons/Details";
+import Search from "../atom/Search";
 
 const TeamsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -54,83 +55,54 @@ const TeamsPage: React.FC = () => {
 
       {/* Stats */}
       <div
-        className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 animate-slide-in"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8 animate-slide-in"
         style={{ animationDelay: "0.1s" }}
       >
-        <div className="border border-btn-border rounded-xl p-5 hover:shadow-lg transition-all">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-font-light text-sm mb-1">Total de Equipos</p>
-              <p className="text-3xl font-bold text-font">{teams.length}</p>
-            </div>
-            <div className="w-12 h-12 rounded-lg bg-icon flex items-center justify-center">
-              <FaIcon name="users" size="size-6" invert />
-            </div>
-          </div>
-        </div>
-
-        <div className="border border-btn-border rounded-xl p-5 hover:shadow-lg transition-all">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-font-light text-sm mb-1">Total de Miembros</p>
-              <p className="text-3xl font-bold text-font">{totalMembers}</p>
-            </div>
-            <div className="w-12 h-12 rounded-lg bg-icon flex items-center justify-center">
-              <FaIcon name="user-group" size="size-6" invert />
-            </div>
-          </div>
-        </div>
-
-        <div className="border border-btn-border rounded-xl p-5 hover:shadow-lg transition-all">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-font-light text-sm mb-1">Proyectos Activos</p>
-              <p className="text-3xl font-bold text-font">{totalProjects}</p>
-            </div>
-            <div className="w-12 h-12 rounded-lg bg-icon flex items-center justify-center">
-              <FaIcon name="folder" size="size-6" invert />
+        {[
+          { label: "Total de Equipos", value: teams.length, icon: "users" },
+          {
+            label: "Total de Miembros",
+            value: totalMembers,
+            icon: "user-group",
+          },
+          { label: "Proyectos Activos", value: totalProjects, icon: "folder" },
+        ].map(({ label, value, icon }, index) => (
+          <div
+            key={index}
+            className="border border-btn-border rounded-xl p-4 hover:shadow-lg transition-all"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-font-light text-sm mb-1">{label}</p>
+                <p className="text-3xl font-bold text-font">{value}</p>
+              </div>
+              <div className="w-12 h-12 rounded-lg bg-icon flex items-center justify-center">
+                <FaIcon name={icon} size="size-6" invert />
+              </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
 
       {/* Filters and Search */}
       <div
-        className="border border-btn-border rounded-xl p-5 mb-8 animate-slide-in"
+        className="border border-btn-border rounded-xl p-4 mb-8 animate-slide-in"
         style={{ animationDelay: "0.2s" }}
       >
         <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
           {/* Search */}
-          <div
-            className="relative flex items-center animate-scale-in border border-btn-border rounded-lg px-2"
-            style={{ animationDelay: "0.2s" }}
-          >
-            <button className="size-10">
-              <FaIcon name="magnifying-glass" light />
-            </button>
-            <input
-              type="text"
-              placeholder="Busca Equipos..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full py-2 text-font text-lg focus:outline-none shadow-2xl transition-all"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-5 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
-              >
-                <FaIcon name="xmark" size="size-5" />
-              </button>
-            )}
-          </div>
+          <Search
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            placeholder="Busca Equipos..."
+          />
 
           <div className="flex gap-3 w-full lg:w-auto">
             {/* Filter by Privacy */}
             <select
               value={filterPrivacy}
               onChange={(e) => setFilterPrivacy(e.target.value)}
-              className="px-4 py-3 border border-btn-border rounded-lg focus:outline-none focus:ring-2 focus:ring-main focus:ring-opacity-50 bg-base text-font transition-all flex-1 lg:flex-initial"
+              className="h-full px-4 py-2 border border-btn-border rounded-lg focus:outline-none focus:ring-2 focus:ring-main focus:ring-opacity-50 bg-base text-font transition-all flex-1 lg:flex-initial"
             >
               <option value="todos">Todos los equipos</option>
               <option value="public">Públicos</option>
@@ -142,7 +114,7 @@ const TeamsPage: React.FC = () => {
 
       {/* Teams Grid */}
       {filteredTeams.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredTeams.map((team, index) => (
             <article
               key={team.id}
@@ -151,28 +123,24 @@ const TeamsPage: React.FC = () => {
             >
               {/* Team Header with Gradient */}
               <div
-                className={`h-16 flex justify-end bg-linear-to-r ${team.color} p-4 rounded-t-2xl`}
+                className={`h-16 flex justify-end items-center gap-2 bg-linear-to-r ${team.color} p-4 rounded-t-2xl`}
               >
-                <div className="flex items-center gap-2">
-                  {team.privacy === "private" && (
-                    <div className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
-                      <FaIcon name="lock" size="size-3" invert />
-                      <span className="text-xs text-base font-semibold">
-                        Privado
-                      </span>
-                    </div>
-                  )}
-                </div>
+                {team.privacy === "private" && (
+                  <div className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
+                    <FaIcon name="lock" size="size-3" invert />
+                    <span className="text-xs text-base font-semibold">
+                      Privado
+                    </span>
+                  </div>
+                )}
               </div>
 
               {/* Team Info */}
-              <div className="p-4">
-                <div className="mb-4">
-                  <h3 className="text-xl font-bold text-font">{team.name}</h3>
-                  <p className="text-font-light text-sm line-clamp-2">
-                    {team.description}
-                  </p>
-                </div>
+              <div className="p-4 flex flex-col">
+                <h3 className="text-xl font-bold text-font">{team.name}</h3>
+                <p className="flex-1 text-font-light text-sm line-clamp-2 mb-4">
+                  {team.description}
+                </p>
 
                 {/* Members Avatars */}
                 <div className="mb-4">

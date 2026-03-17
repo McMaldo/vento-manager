@@ -124,6 +124,9 @@ button {
 .fa-icon-accent {
     fill: var(--color-font);
 }
+.fa-icon-red {
+    fill: var(--color-red-400);
+}
 
 /* Main Page */
 @keyframes slideInUp {
@@ -224,10 +227,6 @@ button {
 }
 .faq-answer.expanded {
     max-height: 500px;
-}
-
-.power-off {
-    fill: var(--color-red-400);
 }
 
 @keyframes slideDown {

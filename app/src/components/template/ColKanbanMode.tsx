@@ -1,20 +1,22 @@
 import type React from "react";
 import type { Column } from "../../types/column";
 import FaIcon from "../atom/FaIcon";
-import KanbanPart from "../molecule/KanbanPart";
+import PartKanbanMode from "./PartKanbanMode";
 import { useEffect, useRef, useState } from "react";
 import type { Part } from "../../types/part";
 
-interface KanbanColProps {
+const ColKanbanMode: React.FC<{
   column: Column;
   toggleMenu: (
     id: string,
     event: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
   ) => void;
-  // nuevo callback que el padre debe implementar para mover piezas entre columnas
-  onMovePart: (partId: string, fromColumnId: string, toColumnId: string) => void;
-}
-const KanbanCol: React.FC<KanbanColProps> = ({ column, toggleMenu, onMovePart }) => {
+  onMovePart: (
+    partId: string,
+    fromColumnId: string,
+    toColumnId: string,
+  ) => void;
+}> = ({ column, toggleMenu, onMovePart }) => {
   const [partList, setPartList] = useState<Part[]>(column.parts);
 
   const [isHovered, setHovered] = useState<boolean>(false);
@@ -46,7 +48,9 @@ const KanbanCol: React.FC<KanbanColProps> = ({ column, toggleMenu, onMovePart })
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
-    const data = e.dataTransfer.getData("application/json") || e.dataTransfer.getData("text/plain");
+    const data =
+      e.dataTransfer.getData("application/json") ||
+      e.dataTransfer.getData("text/plain");
     if (!data) return;
     try {
       const parsed = JSON.parse(data);
@@ -109,11 +113,11 @@ const KanbanCol: React.FC<KanbanColProps> = ({ column, toggleMenu, onMovePart })
         onDrop={handleDrop}
       >
         {partList.map((part) => (
-          // ahora pasamos columnId para que KanbanPart haga drag con origen
-          <KanbanPart key={part.id} part={part} columnId={column.id} />
+          // ahora pasamos columnId para que PartKanbanMode haga drag con origen
+          <PartKanbanMode key={part.id} part={part} columnId={column.id} />
         ))}
       </div>
     </div>
   );
 };
-export default KanbanCol;
+export default ColKanbanMode;

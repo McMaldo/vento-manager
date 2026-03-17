@@ -5,13 +5,14 @@ import FaIcon from "../FaIcon";
 interface DetailsButtonProps {
   label?: string;
   href?: string;
+  bg?: string;
 }
 const DetailsButton: React.FC<DetailsButtonProps> = ({
   label = "Ver Detalles",
   href,
+  bg = "bg-mantle hover:bg-base",
 }) => {
-  const className =
-    "w-fit flex gap-2 items-center text-sm font-semibold text-icon hover:text-font transition-colors bg-mantle hover:bg-base px-3 py-2 rounded-md";
+  const className = `w-fit flex gap-2 items-center text-sm font-semibold text-icon hover:text-font transition-colors ${bg} px-3 py-2 rounded-md`;
 
   return href ? (
     <Link to={href} className={className}>

@@ -4,6 +4,7 @@ import FaIcon from "../atom/FaIcon";
 import type { Project } from "../../types/project";
 import data from "../../demo/projects.json";
 import ProjectCard from "../molecule/ProjectCard";
+import Search from "../atom/Search";
 
 const ProjectsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -96,41 +97,19 @@ const ProjectsPage: React.FC = () => {
 
       {/* Filters and Search */}
       <div
-        className="border border-btn-border rounded-xl p-5 mb-8 animate-slide-in"
+        className="border border-btn-border rounded-xl p-4 mb-8 animate-slide-in"
         style={{ animationDelay: "0.2s" }}
       >
         <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
           {/* Search */}
-          <div
-            className="relative flex items-center animate-scale-in border border-btn-border rounded-lg px-2"
-            style={{ animationDelay: "0.2s" }}
-          >
-            <button className="size-10">
-              <FaIcon name="magnifying-glass" light />
-            </button>
-            <input
-              type="text"
-              placeholder="Busca Proyectos..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full py-2 text-font text-lg focus:outline-none shadow-2xl transition-all"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-5 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
-              >
-                <FaIcon name="xmark" size="size-5" />
-              </button>
-            )}
-          </div>
+          <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
           <div className="flex flex-wrap gap-4 w-full lg:w-auto">
             {/* Filter by Status */}
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="px-4 py-3 border border-btn-border rounded-lg focus:outline-none focus:ring-2 focus:ring-main focus:ring-opacity-50 bg-base text-font transition-all flex-1 lg:flex-initial"
+              className="px-4 py-2 border border-btn-border rounded-lg focus:outline-none focus:ring-2 focus:ring-main focus:ring-opacity-50 bg-base text-font transition-all flex-1 lg:flex-initial"
             >
               <option value="todos">Todos los estados</option>
               <option value="activo">Activos</option>
@@ -143,7 +122,7 @@ const ProjectsPage: React.FC = () => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="px-4 py-3 border border-btn-border rounded-lg focus:outline-none focus:ring-2 focus:ring-main focus:ring-opacity-50 bg-base text-font transition-all flex-1 lg:flex-initial"
+              className="px-4 py-2 border border-btn-border rounded-lg focus:outline-none focus:ring-2 focus:ring-main focus:ring-opacity-50 bg-base text-font transition-all flex-1 lg:flex-initial"
             >
               <option value="recientes">Más Recientes</option>
               <option value="progreso">Por Progreso</option>
@@ -186,7 +165,7 @@ const ProjectsPage: React.FC = () => {
         <div
           className={
             viewMode === "grid"
-              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+              ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
               : "space-y-4"
           }
         >

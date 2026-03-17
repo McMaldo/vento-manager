@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { currentDate, daysLeft } from "../../utils/date";
 import { getProgressColor } from "../../utils/projectColor";
 import type { Project } from "../../types/project";
@@ -7,6 +6,8 @@ import type { Delivery } from "../../types/delivery";
 import data from "../../demo/projects.json";
 import data2 from "../../demo/delivery.json";
 import ProjectCard from "../molecule/ProjectCard";
+import MainButton from "../atom/buttons/Main";
+import SecondaryButton from "../atom/buttons/Secondary";
 
 const MainPage: React.FC = () => {
   const [projects] = useState<Project[]>(data as Project[]);
@@ -38,15 +39,8 @@ const MainPage: React.FC = () => {
             </h1>
           </div>
           <div className="flex sm:flex-col gap-3 md:flex-row">
-            <button className="px-5 py-2.5 bg-icon text-mantle rounded-lg hover:bg-font transition-colors font-medium text-sm">
-              Nuevo Proyecto
-            </button>
-            <Link
-              to="/proyectos"
-              className="px-5 py-2.5 border-2 border-font-light text-icon rounded-lg hover:bg-base transition-colors font-medium text-sm"
-            >
-              Ver Todos
-            </Link>
+            <MainButton text="Nuevo Proyecto" lg />
+            <SecondaryButton href="/proyectos" text="Ver Todos" lg />
           </div>
         </div>
         <div className="hidden md:block h-1 w-20 bg-main rounded-full mt-4"></div>

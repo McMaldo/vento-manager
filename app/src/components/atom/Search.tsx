@@ -1,14 +1,13 @@
 import FaIcon from "./FaIcon";
 
-interface SearchProps {
+const Search: React.FC<{
   searchQuery: string;
-  setSearchQuery: any;
-}
-
-const Search: React.FC<SearchProps> = ({ searchQuery, setSearchQuery }) => {
+  setSearchQuery: (arg0: string) => void;
+  placeholder?: string;
+}> = ({ searchQuery, setSearchQuery, placeholder = "Busca Proyectos..." }) => {
   return (
     <div
-      className="relative flex items-center animate-scale-in border border-btn-border rounded-lg px-2"
+      className="relative flex items-center animate-scale-in bg-base border border-btn-border rounded-lg px-2"
       style={{ animationDelay: "0.2s" }}
     >
       <button className="size-10">
@@ -16,7 +15,7 @@ const Search: React.FC<SearchProps> = ({ searchQuery, setSearchQuery }) => {
       </button>
       <input
         type="text"
-        placeholder="Busca Proyectos..."
+        placeholder={placeholder}
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         className="w-full py-2 text-font text-lg focus:outline-none shadow-2xl transition-all"

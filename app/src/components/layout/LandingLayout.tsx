@@ -19,11 +19,11 @@ const LandingLayout: React.FC = () => {
           className={`flex flex-col gap-4 size-full bg-mantle rounded-2xl ${isFormOpened ? "relative overflow-hidden" : "overflow-x-hidden overflow-y-scroll custom-scroll"}`}
         >
           <Outlet />
-          <div
-            onClick={() => setFormOpened("")}
-            className={`z-11 fixed right-0 top-0 transition-colors ${isFormOpened ? "size-full bg-black/30" : "bg-transparent"}`}
-          ></div>
         </div>
+        <div
+          onClick={() => setFormOpened("")}
+          className={`z-11 fixed right-0 top-0 transition-colors ${isFormOpened ? "size-full bg-black/5 dark:bg-black/30" : "bg-transparent"}`}
+        ></div>
       </main>
       <LoginForm formOpened={formOpened} setFormOpened={setFormOpened} />
       <Overlay />

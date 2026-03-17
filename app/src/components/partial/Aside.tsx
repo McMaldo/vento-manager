@@ -4,6 +4,7 @@ import type { link } from "../../types/link";
 import FaIcon from "../atom/FaIcon.tsx";
 import useWindowWidth from "../../hook/useWindowWidth";
 import useTheme from "../../hook/useTheme.ts";
+import useElementRect from "../../hook/useElementRect.ts";
 
 export default function Aside() {
   const [isExpanded, setExpanded] = useState(false);
@@ -13,15 +14,31 @@ export default function Aside() {
   const navigate = useNavigate();
   const { theme } = useTheme();
 
-  const btns: link[] = [
-    { icon: "house", name: "inicio", href: "inicio" },
-    { icon: "folder", name: "proyectos", href: "proyectos" },
-    { icon: "user-group", name: "equipos", href: "equipos" },
-    { icon: "gear", name: "ajustes", href: "ajustes" },
-    { icon: theme === "dark" ? "moon" : "sun", name: "apariencia", href: "ajustes/apariencia" },
-    { icon: "question-circle", name: "ayuda", href: "ayuda" },
-    { icon: "info-circle", name: "acerca", href: "acerca" },
-  ];
+  const btns: link[] = isMobile
+    ? [
+        { icon: "user-group", name: "equipos", href: "equipos" },
+        { icon: "folder", name: "proyectos", href: "proyectos" },
+        { icon: "house", name: "inicio", href: "inicio" },
+        {
+          icon: theme === "dark" ? "moon" : "sun",
+          name: "apariencia",
+          href: "ajustes/apariencia",
+        },
+        { icon: "gear", name: "ajustes", href: "ajustes" },
+      ]
+    : [
+        { icon: "house", name: "inicio", href: "inicio" },
+        { icon: "folder", name: "proyectos", href: "proyectos" },
+        { icon: "user-group", name: "equipos", href: "equipos" },
+        { icon: "gear", name: "ajustes", href: "ajustes" },
+        {
+          icon: theme === "dark" ? "moon" : "sun",
+          name: "apariencia",
+          href: "ajustes/apariencia",
+        },
+        { icon: "question-circle", name: "ayuda", href: "ayuda" },
+        { icon: "info-circle", name: "acerca", href: "acerca" },
+      ];
 
   // Calcula la página actual desde la URL — sin onClick ni estado manual
   const currentPageName =
@@ -29,31 +46,34 @@ export default function Aside() {
     btns.find((btn) => location.pathname.startsWith("/" + btn.href))?.name ??
     (location.pathname.includes("/proyecto/") ? "proyectos" : "inicio");
 
-  const [btnHover, setBtnHover] = useState({ position: 0 });
-  const linkContainer = useRef(null);
-  const [currentPosition, setCurrentPosition] = useState(0);
+  const [markerPosition, setMarkerPosition] = useState(0);
+  const linkContainer = useRef<HTMLElement>(null);
+  const { top: containerTop, left: containerLeft } =
+    useElementRect(linkContainer);
+  const [hoverPosition, setHoverPosition] = useState(0);
 
   // Actualiza la posición del marker cuando cambia la página
   useEffect(() => {
     const activeBtn = document.querySelector(`#aside-${currentPageName}`);
     if (activeBtn) {
       const rect = activeBtn.getBoundingClientRect();
+
       if (isMobile) {
-        setCurrentPosition(rect.left - 16);
-        setBtnHover({ position: rect.left - 16 });
+        setHoverPosition(rect.left - containerLeft);
+        setMarkerPosition(rect.left - containerLeft);
       } else {
-        setCurrentPosition(rect.top - 64);
-        setBtnHover({ position: rect.top - 64 });
+        setHoverPosition(rect.top - containerTop);
+        setMarkerPosition(rect.top - containerTop);
       }
     }
-  }, [currentPageName]);
+  }, [currentPageName, isMobile, containerLeft, containerTop]);
 
   return (
     <aside
       id="aside"
       ref={linkContainer}
       className={
-        "[grid-area:aside] relative w-full flex items-center md:items-start md:flex-col bg-base transition-all " +
+        "[grid-area:aside] relative flex items-center md:items-start md:flex-col bg-base transition-all mx-auto md:mx-0 " +
         (isExpanded ? "md:w-50" : "md:w-17")
       }
       onMouseEnter={() => setExpanded(true)}
@@ -72,11 +92,11 @@ export default function Aside() {
             }`}
             onMouseEnter={(e) => {
               const rect = e.currentTarget.getBoundingClientRect();
-              setBtnHover({
-                position: isMobile ? rect.left - 16 : rect.top - 64,
-              });
+              setMarkerPosition(
+                isMobile ? rect.left - containerLeft : rect.top - containerTop,
+              );
             }}
-            onMouseLeave={() => setBtnHover({ position: currentPosition })}
+            onMouseLeave={() => setMarkerPosition(hoverPosition)}
           >
             <FaIcon
               name={btn.icon}
@@ -103,8 +123,8 @@ export default function Aside() {
         id="aside-marker"
         className="absolute top-0 md:top-auto md:left-0 w-17 h-2 md:w-2 md:h-17 transition-all duration-200 px-2 md:px-0 md:py-4"
         style={{
-          top: !isMobile ? btnHover.position : undefined,
-          left: isMobile ? btnHover.position : undefined,
+          top: !isMobile ? markerPosition : undefined,
+          left: isMobile ? markerPosition : undefined,
         }}
       >
         <div className="w-full md:h-full h-7/10 md:w-7/10 bg-main rounded-b-full md:rounded-l-none md:rounded-r-full"></div>
@@ -128,7 +148,7 @@ export default function Aside() {
           className={`transition-opacity ${isExpanded ? "opacity-100" : "hidden opacity-0"}`}
           title="Cerrar Sesión"
         >
-          <FaIcon name="power-off" size="power-off size-8" />
+          <FaIcon name="power-off" size="size-8" red />
         </button>
       </article>
     </aside>

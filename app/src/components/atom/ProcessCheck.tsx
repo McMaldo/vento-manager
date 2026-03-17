@@ -1,26 +1,28 @@
 import type { Process } from "../../types/part";
-import { useState } from "react";
+import type { ChangeEventHandler, MouseEventHandler } from "react";
 import FaIcon from "../atom/FaIcon";
 import processes from "../../assets/processes.json";
 
-interface ProcessCheckProps {
+const ProcessCheck: React.FC<{
   partID: string;
   item: Process;
-}
-
-const ProcessCheck: React.FC<ProcessCheckProps> = ({ partID, item }) => {
-  const [itemProps, setItemProps] = useState<Process>(item);
-  const inputID = `${partID}-${itemProps.name}`;
+  onToggle: MouseEventHandler<HTMLDivElement> | undefined;
+  onChange: ChangeEventHandler<HTMLInputElement> | undefined;
+  className?: string;
+}> = ({ partID, item, onToggle, onChange, className = "" }) => {
+  const inputID = `${partID}-${item.name}`;
   const datalistID = `${inputID}-suggestions`;
-
-  const toggleCheck = () =>
-    setItemProps((prev) => ({ ...prev, isCompleted: !prev.isCompleted }));
+  const placeholder = item.name;
 
   return (
-    <div id={inputID} className="flex items-center gap-2" onClick={toggleCheck}>
+    <div
+      id={inputID}
+      className={"group flex items-center gap-2 " + className}
+      onClick={onToggle}
+    >
       <div
-        className={`grid place-items-center size-4 border border-icon hover:border-font transition-colors ${
-          itemProps.isCompleted ? "bg-icon hover:bg-font" : "bg-base"
+        className={`grid place-items-center size-4 border border-btn-border transition-colors ${
+          item.isCompleted ? "bg-icon hover:bg-font" : "group-hover:border-icon"
         }`}
       >
         <FaIcon name="check" size="size-3" invert />
@@ -30,13 +32,14 @@ const ProcessCheck: React.FC<ProcessCheckProps> = ({ partID, item }) => {
         type="text"
         name="name"
         list={datalistID}
-        value={itemProps.name}
-        onChange={(e) =>
-          setItemProps((prev) => ({ ...prev, name: e.target.value }))
-        }
+        value={item.name}
+        onChange={onChange}
         onClick={(e) => e.stopPropagation()}
-        placeholder={item.name}
-        className="w-full bg-none outline-none border-none text-icon"
+        placeholder={placeholder}
+        className={
+          "w-full bg-none outline-none border-none text-sm " +
+          (item.isCompleted ? "line-through  text-font-light" : "text-icon")
+        }
       />
 
       <datalist id={datalistID}>
