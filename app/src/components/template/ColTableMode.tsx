@@ -2,66 +2,15 @@ import React from "react";
 import type { Column } from "../../types/column";
 import PartTableMode from "./PartTableMode";
 import SecondaryButton from "../atom/buttons/Secondary";
-
-interface ColTableRowProps {
-  col: Column;
-  expanded: Record<string, boolean>;
-  dragPart: string | null;
-  dragOver: string | null;
-  toggle: (key: string) => void;
-  updateCol: (colId: string, field: string, value: string) => void;
-  addPart: (colId: string) => void;
-  delPart: (colId: string, partId: string) => void;
-  updatePart: (
-    colId: string,
-    partId: string,
-    field: string,
-    value: string,
-  ) => void;
-  toggleProc: (colId: string, partId: string, idx: number) => void;
-  updateProc: (
-    colId: string,
-    partId: string,
-    idx: number,
-    field: string,
-    value: string,
-  ) => void;
-  addProc: (colId: string, partId: string) => void;
-  delProc: (colId: string, partId: string, idx: number) => void;
-  updateStore: (
-    colId: string,
-    partId: string,
-    field: string,
-    rawValue: string,
-  ) => void;
-  setDragPart: (id: string | null) => void;
-  setDragCol: (id: string | null) => void;
-  setDragOver: (id: string | null) => void;
-  handleDrop: (tgtColId: string, tgtPartId: string) => void;
-}
+import { useProjectColumns } from "../../context/ProjectContext";
 
 const td = "px-3 py-1.5 align-center";
 
-const ColTableRow: React.FC<ColTableRowProps> = ({
-  col,
-  expanded,
-  dragPart,
-  dragOver,
-  toggle,
-  updateCol,
-  addPart,
-  delPart,
-  updatePart,
-  toggleProc,
-  updateProc,
-  addProc,
-  delProc,
-  updateStore,
-  setDragPart,
-  setDragCol,
-  setDragOver,
-  handleDrop,
-}) => {
+const ColTableRow: React.FC<{
+  col: Column;
+}> = ({ col }) => {
+  const { expanded, toggle, updateCol, addPart } = useProjectColumns();
+
   const colOpen = !!expanded["col_" + col.id];
   const doneCount = col.parts.filter(
     (p) =>
@@ -122,22 +71,8 @@ const ColTableRow: React.FC<ColTableRowProps> = ({
           <PartTableMode
             key={part.id}
             part={part}
-            col={col}
+            columnId={col.id}
             isExpanded={!!expanded["part_" + part.id]}
-            dragPart={dragPart}
-            dragOver={dragOver}
-            toggle={toggle}
-            delPart={delPart}
-            updatePart={updatePart}
-            toggleProc={toggleProc}
-            updateProc={updateProc}
-            addProc={addProc}
-            delProc={delProc}
-            updateStore={updateStore}
-            setDragPart={setDragPart}
-            setDragCol={setDragCol}
-            setDragOver={setDragOver}
-            handleDrop={handleDrop}
           />
         ))}
     </>

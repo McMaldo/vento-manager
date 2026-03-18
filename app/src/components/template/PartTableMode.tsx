@@ -1,67 +1,34 @@
 import React from "react";
 import FaIcon from "../atom/FaIcon";
-import type { Column } from "../../types/column";
 import type { Part } from "../../types/part";
 import ProcessCheck from "../atom/ProcessCheck";
 import DetailsButton from "../atom/buttons/Details";
-
-interface PartTableModeProps {
-  part: Part;
-  col: Column;
-  isExpanded: boolean;
-  dragPart: string | null;
-  dragOver: string | null;
-  toggle: (key: string) => void;
-  delPart: (colId: string, partId: string) => void;
-  updatePart: (
-    colId: string,
-    partId: string,
-    field: string,
-    value: string,
-  ) => void;
-  toggleProc: (colId: string, partId: string, idx: number) => void;
-  updateProc: (
-    colId: string,
-    partId: string,
-    idx: number,
-    field: string,
-    value: string,
-  ) => void;
-  addProc: (colId: string, partId: string) => void;
-  delProc: (colId: string, partId: string, idx: number) => void;
-  updateStore: (
-    colId: string,
-    partId: string,
-    field: string,
-    rawValue: string,
-  ) => void;
-  setDragPart: (id: string | null) => void;
-  setDragCol: (id: string | null) => void;
-  setDragOver: (id: string | null) => void;
-  handleDrop: (tgtColId: string, tgtPartId: string) => void;
-}
+import { useProjectColumns } from "../../context/ProjectContext";
 
 const td = "px-3 py-2 align-center";
 
-const PartTableMode: React.FC<PartTableModeProps> = ({
-  part,
-  col,
-  isExpanded,
-  dragPart,
-  dragOver,
-  toggle,
-  delPart,
-  updatePart,
-  toggleProc,
-  updateProc,
-  addProc,
-  delProc,
-  updateStore,
-  setDragPart,
-  setDragCol,
-  setDragOver,
-  handleDrop,
-}) => {
+const PartTableMode: React.FC<{
+  part: Part;
+  columnId: string;
+  isExpanded: boolean;
+}> = ({ part, columnId, isExpanded }) => {
+  const {
+    dragOver,
+    dragPart,
+    setDragPart,
+    setDragCol,
+    setDragOver,
+    handleDrop,
+    toggle,
+    updatePart,
+    delPart,
+    toggleProc,
+    updateProc,
+    delProc,
+    addProc,
+    updateStore,
+  } = useProjectColumns();
+
   const procs = part.process ?? [];
   const done = procs.filter((pr) => pr.isCompleted).length;
   const pct = procs.length ? Math.round((done / procs.length) * 100) : null;
@@ -82,7 +49,7 @@ const PartTableMode: React.FC<PartTableModeProps> = ({
         style={{ opacity: dragPart === part.id ? 0.3 : 1 }}
         onDragStart={() => {
           setDragPart(part.id);
-          setDragCol(col.id);
+          setDragCol(columnId);
         }}
         onDragEnd={() => {
           setDragPart(null);
@@ -94,7 +61,7 @@ const PartTableMode: React.FC<PartTableModeProps> = ({
           setDragOver(part.id);
         }}
         onDragLeave={() => setDragOver(null)}
-        onDrop={() => handleDrop(col.id, part.id)}
+        onDrop={() => handleDrop(columnId, part.id)}
       >
         <td
           className={
@@ -117,7 +84,7 @@ const PartTableMode: React.FC<PartTableModeProps> = ({
             value={part.title}
             onMouseDown={(e) => e.stopPropagation()}
             onChange={(e) =>
-              updatePart(col.id, part.id, "title", e.target.value)
+              updatePart(columnId, part.id, "title", e.target.value)
             }
           />
         </td>
@@ -127,7 +94,7 @@ const PartTableMode: React.FC<PartTableModeProps> = ({
             value={part.description}
             onMouseDown={(e) => e.stopPropagation()}
             onChange={(e) =>
-              updatePart(col.id, part.id, "description", e.target.value)
+              updatePart(columnId, part.id, "description", e.target.value)
             }
           />
         </td>
@@ -138,7 +105,7 @@ const PartTableMode: React.FC<PartTableModeProps> = ({
         <td className={td}>
           <button
             className="text-xs text-btn-border group-hover:text-icon hover:text-red-500 dark:hover:text-red-400 bg-transparent border-none cursor-pointer"
-            onClick={() => delPart(col.id, part.id)}
+            onClick={() => delPart(columnId, part.id)}
           >
             ✕ Eliminar
           </button>
@@ -158,9 +125,9 @@ const PartTableMode: React.FC<PartTableModeProps> = ({
                   key={i}
                   partID={part.id}
                   item={proc}
-                  onToggle={() => toggleProc(col.id, part.id, i)}
+                  onToggle={() => toggleProc(columnId, part.id, i)}
                   onChange={(e) =>
-                    updateProc(col.id, part.id, i, "name", e.target.value)
+                    updateProc(columnId, part.id, i, "name", e.target.value)
                   }
                 />
               </td>
@@ -170,7 +137,7 @@ const PartTableMode: React.FC<PartTableModeProps> = ({
               <td className={td}>
                 <button
                   className="text-xs text-btn-border group-hover:text-icon hover:text-red-500 dark:hover:text-red-400 bg-transparent border-none cursor-pointer"
-                  onClick={() => delProc(col.id, part.id, i)}
+                  onClick={() => delProc(columnId, part.id, i)}
                 >
                   ✕ Eliminar
                 </button>
@@ -183,7 +150,7 @@ const PartTableMode: React.FC<PartTableModeProps> = ({
             <td className={td + " pl-14"} colSpan={5}>
               <button
                 className="text-xs text-icon hover:text-font bg-transparent border-none cursor-pointer"
-                onClick={() => addProc(col.id, part.id)}
+                onClick={() => addProc(columnId, part.id)}
               >
                 + Añadir Proceso
               </button>
@@ -219,7 +186,7 @@ const PartTableMode: React.FC<PartTableModeProps> = ({
                     value={part.store?.location?.[field] ?? ""}
                     onMouseDown={(e) => e.stopPropagation()}
                     onChange={(e) =>
-                      updateStore(col.id, part.id, field, e.target.value)
+                      updateStore(columnId, part.id, field, e.target.value)
                     }
                   />
                 </span>

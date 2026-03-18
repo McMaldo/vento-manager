@@ -124,6 +124,16 @@
         "id": "8",
         "title": "Pieza 1015",
         "description": "Placa base de fundición gris para anclaje de cilindro hidráulico",
+        "process": [
+          {
+            "isCompleted": true,
+            "name": "soldadura"
+          },
+          {
+            "isCompleted": true,
+            "name": "sublimado"
+          }
+        ],
         "store": {
           "id": 1,
           "location": {
@@ -135,6 +145,16 @@
         "id": "9",
         "title": "Pieza 1018",
         "description": "Correa dentada HTD de poliuretano reforzado para transmisión sincrónica",
+        "process": [
+          {
+            "isCompleted": true,
+            "name": "soldadura"
+          },
+          {
+            "isCompleted": false,
+            "name": "pintura"
+          }
+        ],
         "store": {
           "id": 2,
           "location": {

@@ -3,7 +3,7 @@ import type { Column } from "../../types/column";
 import FaIcon from "../atom/FaIcon";
 import PartKanbanMode from "./PartKanbanMode";
 import { useEffect, useRef, useState } from "react";
-import type { Part } from "../../types/part";
+import { useProjectColumns } from "../../context/ProjectContext";
 
 const ColKanbanMode: React.FC<{
   column: Column;
@@ -11,57 +11,18 @@ const ColKanbanMode: React.FC<{
     id: string,
     event: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
   ) => void;
-  onMovePart: (
-    partId: string,
-    fromColumnId: string,
-    toColumnId: string,
-  ) => void;
-}> = ({ column, toggleMenu, onMovePart }) => {
-  const [partList, setPartList] = useState<Part[]>(column.parts);
-
+}> = ({ column, toggleMenu }) => {
+  const { addPart, updateCol } = useProjectColumns();
   const [isHovered, setHovered] = useState<boolean>(false);
   const [addPartBtnHeight, setAddPartBtnHeight] = useState<number>(0);
   const addPartBtn = useRef<HTMLButtonElement>(null);
-
-  const newPart: Part = {
-    id: crypto.randomUUID(),
-    img: "",
-    title: "Nueva Pieza",
-    description: "Sin Descripción",
-  };
+  const [isEditable, setEditable] = useState<boolean>(false);
 
   useEffect(() => {
     if (addPartBtn.current) {
       setAddPartBtnHeight(addPartBtn.current.scrollHeight);
     }
   }, []);
-
-  // sincroniza estado local cuando el padre actualiza column.parts
-  useEffect(() => {
-    setPartList(column.parts);
-  }, [column.parts]);
-
-  // DnD handlers
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault(); // necesario para permitir drop
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    const data =
-      e.dataTransfer.getData("application/json") ||
-      e.dataTransfer.getData("text/plain");
-    if (!data) return;
-    try {
-      const parsed = JSON.parse(data);
-      const { partId, fromColumnId } = parsed;
-      if (!partId || !fromColumnId) return;
-      if (fromColumnId === column.id) return; // mismo column => no mover
-      onMovePart(partId, fromColumnId, column.id);
-    } catch {
-      // ignore malformed data
-    }
-  };
 
   return (
     <div
@@ -77,9 +38,15 @@ const ColKanbanMode: React.FC<{
             <div className={`size-6 rounded-full p-1 ${column.color}`}>
               <div className="size-4 rounded-full bg-base"></div>
             </div>
-            <h2 className="text-xl font-bold">{column.title}</h2>
+            <input
+              value={column.title}
+              readOnly={!isEditable}
+              className="bg-transparent border-none outline-none text-xl font-bold w-full"
+              onClick={(e) => e.stopPropagation()}
+              onChange={(e) => updateCol(column.id, "title", e.target.value)}
+            />
             <span className="text-sm text-font-light font-semibold bg-base py-1 px-2 rounded-md">
-              {partList.length}
+              {column.parts.length}
             </span>
           </div>
           <button
@@ -98,7 +65,7 @@ const ColKanbanMode: React.FC<{
           <button
             ref={addPartBtn}
             className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-icon hover:bg-font transition-colors"
-            onClick={() => setPartList([newPart, ...partList])}
+            onClick={() => addPart(column.id)}
           >
             <FaIcon name="plus" invert size="size-4" />
             <span className="text-base">Agregar Pieza</span>
@@ -107,12 +74,8 @@ const ColKanbanMode: React.FC<{
       </div>
 
       {/* Scrollable Tasks */}
-      <div
-        className="max-h-full overflow-y-scroll custom-scroll space-y-4 p-2"
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-      >
-        {partList.map((part) => (
+      <div className="max-h-full overflow-y-scroll custom-scroll space-y-4 p-2">
+        {column.parts.map((part) => (
           // ahora pasamos columnId para que PartKanbanMode haga drag con origen
           <PartKanbanMode key={part.id} part={part} columnId={column.id} />
         ))}

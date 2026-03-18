@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import FaIcon from "../atom/FaIcon";
 import type { Column } from "../../types/column";
-import KanbanMode from "../template/ProjectKanbanMode";
-import TableMode from "../template/ProjectTableMode";
+const KanbanMode = lazy(() => import("../template/ProjectKanbanMode"));
+const TableMode = lazy(() => import("../template/ProjectTableMode"));
 import { useParams } from "react-router-dom";
 import data from "../../demo/parts.json";
 import parseCSV from "../../utils/parseCsv";
 import type { Part } from "../../types/part";
 import SecondaryButton from "../atom/buttons/Secondary";
 import useLocalStorage from "../../hook/useLocalStorage";
-//import FileOverlay from "../template/FileSaving";
+import { ProjectColumnsProvider } from "../../context/ProjectContext";
+import Loading from "../atom/Loading";
 
 const ProjectPage: React.FC = () => {
   const { projectId } = useParams();
@@ -141,13 +142,19 @@ const ProjectPage: React.FC = () => {
         onDragOver={handleDragOverFile}
         onDragLeave={handleDragLeaveFile}
         onDrop={handleDropFile}
-        className={`max-w-full overflow-x-scroll ${isKanbanMode ? "overflow-y-hidden custom-scroll-horizontal" : "overflow-y-scroll custom-scroll"}`}
+        className={`max-w-full overflow-x-scroll size-full ${isKanbanMode ? "overflow-y-hidden custom-scroll-horizontal" : "overflow-y-scroll custom-scroll"}`}
       >
-        {isKanbanMode ? (
-          <KanbanMode columns={columns} />
-        ) : (
-          <TableMode columns={columns} />
-        )}
+        <ProjectColumnsProvider columns={columns} setColumns={setColumns}>
+          {isKanbanMode ? (
+            <Suspense fallback={<Loading />}>
+              <KanbanMode />
+            </Suspense>
+          ) : (
+            <Suspense fallback={<Loading />}>
+              <TableMode />
+            </Suspense>
+          )}
+        </ProjectColumnsProvider>
       </section>
 
       {/* Overlay visual cuando se arrastra un archivo */}

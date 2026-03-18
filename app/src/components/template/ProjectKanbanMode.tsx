@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import FaIcon from "../atom/FaIcon";
 import type { Column } from "../../types/column";
 import ColKanbanMode from "./ColKanbanMode";
+import { useProjectColumns } from "../../context/ProjectContext";
 
 interface ColumnMenuPosition {
   columnId: string;
@@ -9,10 +10,8 @@ interface ColumnMenuPosition {
   left: number;
 }
 
-const KanbanMode: React.FC<{
-  columns: Column[];
-}> = ({ columns }) => {
-  const [cols, setCols] = useState<Column[]>(columns);
+const KanbanMode: React.FC = () => {
+  const { cols } = useProjectColumns();
 
   const [activeMenu, setActiveMenu] = useState<ColumnMenuPosition | null>(null);
   const [showColumnVisible, setShowColumnVisible] = useState<{
@@ -52,32 +51,6 @@ const KanbanMode: React.FC<{
     setActiveMenu(null);
   };
 
-  const handleMovePart = (
-    partId: string,
-    fromColumnId: string,
-    toColumnId: string,
-  ) => {
-    setCols((cols) => {
-      const fromIdx = cols.findIndex((c) => c.id === fromColumnId);
-      const toIdx = cols.findIndex((c) => c.id === toColumnId);
-      if (fromIdx === -1 || toIdx === -1) return cols;
-
-      const fromCol = { ...cols[fromIdx], parts: [...cols[fromIdx].parts] };
-      const toCol = { ...cols[toIdx], parts: [...cols[toIdx].parts] };
-
-      const partIndex = fromCol.parts.findIndex((p) => p.id === partId);
-      if (partIndex === -1) return cols;
-
-      const [moved] = fromCol.parts.splice(partIndex, 1);
-      toCol.parts.unshift(moved);
-
-      const newCols = [...cols];
-      newCols[fromIdx] = fromCol;
-      newCols[toIdx] = toCol;
-      return newCols;
-    });
-  };
-
   return (
     <>
       <div className="flex gap-4 h-full">
@@ -87,7 +60,6 @@ const KanbanMode: React.FC<{
                 key={index}
                 column={column}
                 toggleMenu={toggleColumnMenu}
-                onMovePart={handleMovePart}
               />
             ))
           : "empty"}
