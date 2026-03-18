@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState } from "react";
+import React, { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import FaIcon from "../atom/FaIcon";
 import type { Column } from "../../types/column";
 const KanbanMode = lazy(() => import("../template/ProjectKanbanMode"));
@@ -11,11 +11,43 @@ import SecondaryButton from "../atom/buttons/Secondary";
 import useLocalStorage from "../../hook/useLocalStorage";
 import { ProjectColumnsProvider } from "../../context/ProjectContext";
 import Loading from "../atom/Loading";
+import ProjectFilterBtn, {
+  type ProjectFilter,
+} from "../molecule/ProjectFilter";
+import Search from "../atom/Search";
+import { searchCols } from "../../utils/searchCols";
+import type { SortConfig, SortField } from "../../types/sort";
+import { sortCols } from "../../utils/sortCols";
+import SortControl from "../molecule/SortControl";
 
 const ProjectPage: React.FC = () => {
   const { projectId } = useParams();
   const [isKanbanMode, setKanbanMode] = useLocalStorage("projectMode", true);
   const [columns, setColumns] = useState<Column[]>(data);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setDebouncedQuery(searchQuery), 300);
+    return () => clearTimeout(timeout);
+  }, [searchQuery]);
+
+  const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
+
+  const filteredCols = useMemo(
+    () => sortCols(searchCols(columns, debouncedQuery), sortConfig),
+    [columns, debouncedQuery, sortConfig],
+  );
+
+  // Para ordenar — si se vuelve a clickear el mismo campo, invierte el orden
+  const handleSort = (field: SortField) => {
+    setSortConfig((prev) =>
+      prev?.field === field && prev.order === "asc"
+        ? { field, order: "desc" }
+        : { field, order: "asc" },
+    );
+  };
+  const clearSort = () => setSortConfig(null);
 
   // CSV drop / preview state
   const [isDraggingFile, setIsDraggingFile] = useState(false);
@@ -107,13 +139,31 @@ const ProjectPage: React.FC = () => {
 
         <div className="w-full md:w-fit flex items-center justify-between gap-2">
           <div className="flex gap-2">
-            {["magnifying-glass", "filter", "sort"].map((icon, index) => (
-              <button
-                key={index}
-                className="size-11 grid place-items-center bg-base rounded-lg transition-colors"
-              >
-                <FaIcon name={icon} light />
-              </button>
+            {(
+              [
+                {
+                  icon: "magnifying-glass",
+                  content: (
+                    <Search
+                      searchQuery={searchQuery}
+                      setSearchQuery={setSearchQuery}
+                      placeholder="Buscar piezas, procesos..."
+                    />
+                  ),
+                },
+                {
+                  icon: "filter",
+                  content: (
+                    <SortControl
+                      sortConfig={sortConfig}
+                      onSort={handleSort}
+                      onClear={clearSort}
+                    />
+                  ),
+                },
+              ] as ProjectFilter[]
+            ).map(({ icon, content }, index) => (
+              <ProjectFilterBtn icon={icon} content={content} key={index} />
             ))}
           </div>
           <div className="bg-base rounded-xl border border-btn-border p-1">
@@ -144,7 +194,7 @@ const ProjectPage: React.FC = () => {
         onDrop={handleDropFile}
         className={`max-w-full overflow-x-scroll size-full ${isKanbanMode ? "overflow-y-hidden custom-scroll-horizontal" : "overflow-y-scroll custom-scroll"}`}
       >
-        <ProjectColumnsProvider columns={columns} setColumns={setColumns}>
+        <ProjectColumnsProvider columns={filteredCols} setColumns={setColumns}>
           {isKanbanMode ? (
             <Suspense fallback={<Loading />}>
               <KanbanMode />

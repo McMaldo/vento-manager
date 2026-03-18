@@ -4,6 +4,7 @@ import FaIcon from "../atom/FaIcon";
 import PartKanbanMode from "./PartKanbanMode";
 import { useEffect, useRef, useState } from "react";
 import { useProjectColumns } from "../../context/ProjectContext";
+import useOnClickOutside from "../../hook/useOnClickOutside";
 
 const ColKanbanMode: React.FC<{
   column: Column;
@@ -11,18 +12,23 @@ const ColKanbanMode: React.FC<{
     id: string,
     event: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
   ) => void;
-}> = ({ column, toggleMenu }) => {
+  isColumnEditable: boolean;
+  setColumnEditable: (newValue: boolean) => void;
+}> = ({ column, toggleMenu, isColumnEditable, setColumnEditable }) => {
   const { addPart, updateCol } = useProjectColumns();
   const [isHovered, setHovered] = useState<boolean>(false);
   const [addPartBtnHeight, setAddPartBtnHeight] = useState<number>(0);
   const addPartBtn = useRef<HTMLButtonElement>(null);
-  const [isEditable, setEditable] = useState<boolean>(false);
 
   useEffect(() => {
     if (addPartBtn.current) {
       setAddPartBtnHeight(addPartBtn.current.scrollHeight);
     }
   }, []);
+
+  const editableTitle = useOnClickOutside<HTMLInputElement>(() => {
+    if (isColumnEditable) setColumnEditable(false);
+  });
 
   return (
     <div
@@ -40,9 +46,11 @@ const ColKanbanMode: React.FC<{
             </div>
             <input
               value={column.title}
-              readOnly={!isEditable}
-              className="bg-transparent border-none outline-none text-xl font-bold w-full"
+              readOnly={!isColumnEditable}
+              ref={editableTitle}
+              className={`bg-transparent outline-none text-xl font-bold w-full border transition-colors ${isColumnEditable ? "border-btn-border" : "border-transparent "}`}
               onClick={(e) => e.stopPropagation()}
+              onDoubleClick={() => setColumnEditable(true)}
               onChange={(e) => updateCol(column.id, "title", e.target.value)}
             />
             <span className="text-sm text-font-light font-semibold bg-base py-1 px-2 rounded-md">

@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios, { type AxiosError } from "axios";
 import Logo from "../atom/Logo";
 import ExpandMessage from "../atom/ExpandMessage";
 import FormInput from "../molecule/FormInput";
-import Input from "../atom/Input";
 
 // Configuración global recomendada (idealmente en un archivo axios.ts separado)
 // axios.defaults.withCredentials = true;
@@ -63,9 +62,11 @@ const LoginForm: React.FC<LoginProps> = ({ formOpened, setFormOpened }) => {
         { withCredentials: true },
       );
       navigate("/inicio");
-    } catch (err: any) {
+    } catch (err) {
+      const axiosErr = err as AxiosError<{ message?: string }>;
       const msg =
-        err?.response?.data?.message || "Ocurrió un error. Intentá de nuevo.";
+        axiosErr?.response?.data?.message ||
+        "Ocurrió un error. Intentá de nuevo.";
       setError(msg);
     } finally {
       setLoading(false);
@@ -113,7 +114,6 @@ const LoginForm: React.FC<LoginProps> = ({ formOpened, setFormOpened }) => {
 
       {/* Formulario */}
       <form onSubmit={handleSubmit} className="w-full flex flex-col">
-        <Input label="Email" value="Ingresar Email" />
         <FormInput
           label="Email"
           type="email"

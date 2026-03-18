@@ -152,7 +152,7 @@ const PartTableMode: React.FC<{
                 className="text-xs text-icon hover:text-font bg-transparent border-none cursor-pointer"
                 onClick={() => addProc(columnId, part.id)}
               >
-                + Añadir Proceso
+                + Agregar Proceso
               </button>
             </td>
           </tr>

@@ -23,7 +23,7 @@ const ColTableRow: React.FC<{
       <tr
         className="sticky top-8 z-2 bg-base cursor-pointer hover:bg-base"
         onClick={(e) => {
-          const tagName = e.target.tagName.toUpperCase();
+          const tagName = (e.target as HTMLElement).tagName.toUpperCase();
           if (tagName === "INPUT" || tagName === "BUTTON") return;
           toggle("col_" + col.id);
         }}

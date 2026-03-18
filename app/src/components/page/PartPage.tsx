@@ -247,9 +247,9 @@ const PartPage: React.FC<{
                 <button
                   key={n}
                   onClick={() => updateStoreId(n)}
-                  className={`w-7 h-7 rounded text-xs border transition-colors cursor-pointer ${
+                  className={`w-7 h-7 rounded text-xs border transition-colors cursor-pointer font-bold ${
                     part.store?.id === n
-                      ? "bg-font text-base border-transparent text-bold"
+                      ? "bg-font text-base border-transparent"
                       : "bg-transparent text-font border-btn-border hover:border-icon"
                   }`}
                 >

@@ -1,8 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import FaIcon from "../atom/FaIcon";
 import type { Column } from "../../types/column";
 import ColKanbanMode from "./ColKanbanMode";
 import { useProjectColumns } from "../../context/ProjectContext";
+import useOnClickOutside from "../../hook/useOnClickOutside";
 
 interface ColumnMenuPosition {
   columnId: string;
@@ -22,9 +23,16 @@ const KanbanMode: React.FC = () => {
     almacen: true,
     demorados: true,
   });
+  const [columnEditable, setColumnEditable] = useState<{
+    [key: string]: boolean;
+  }>({
+    pedidos: false,
+    proceso: false,
+    almacen: false,
+    demorados: false,
+  });
 
-  const menuRef = useRef<HTMLDivElement>(null);
-
+  const menuRef = useOnClickOutside<HTMLElement>(() => setActiveMenu(null));
   const toggleColumnMenu = (
     columnId: string,
     event: React.MouseEvent<HTMLButtonElement>,
@@ -50,6 +58,13 @@ const KanbanMode: React.FC = () => {
     }));
     setActiveMenu(null);
   };
+  const updateColumnEditable = (columnId: string, newValue: boolean) => {
+    setColumnEditable((prev) => ({
+      ...prev,
+      [columnId]: newValue,
+    }));
+    setActiveMenu(null);
+  };
 
   return (
     <>
@@ -60,6 +75,10 @@ const KanbanMode: React.FC = () => {
                 key={index}
                 column={column}
                 toggleMenu={toggleColumnMenu}
+                isColumnEditable={columnEditable[column.id]}
+                setColumnEditable={(value) =>
+                  updateColumnEditable(column.id, value)
+                }
               />
             ))
           : "empty"}
@@ -67,13 +86,16 @@ const KanbanMode: React.FC = () => {
       {activeMenu && (
         <article
           ref={menuRef}
-          className="fixed group z-10 bg-mantle border border-btn-border rounded-2xl shadow-2xl w-64 overflow-hidden menu-dropdown hover:border-font-light"
+          className="fixed group z-10 bg-mantle border border-btn-border rounded-2xl shadow-base shadow-2xl w-64 overflow-hidden menu-dropdown hover:border-font-light"
           style={{
             top: `${activeMenu.top}px`,
             left: `${activeMenu.left}px`,
           }}
         >
-          <button className="w-full p-2 pl-8 hover:bg-base transition-colors flex items-center justify-between">
+          <button
+            onClick={() => updateColumnEditable(activeMenu.columnId, true)}
+            className="w-full p-2 pl-8 hover:bg-base transition-colors flex items-center justify-between"
+          >
             <span className="font-light">Editar Nombre</span>
           </button>
           <button className="w-full p-2 pl-8 hover:bg-base transition-colors flex items-center justify-between">
